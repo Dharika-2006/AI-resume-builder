@@ -32,7 +32,8 @@ export default function App() {
       <Toaster
         position="top-right"
         toastOptions={{
-          className: 'bg-slate-900 text-slate-100 border border-slate-800 rounded-2xl backdrop-blur-xl',
+          className:
+            'bg-slate-900 text-slate-100 border border-slate-800 rounded-2xl backdrop-blur-xl',
           duration: 4000,
           style: {
             background: 'rgba(15, 23, 42, 0.9)',

@@ -42,7 +42,9 @@ export default function useAutosave({
     debounceTimerRef.current = setTimeout(async () => {
       // 6. Concurrency Guard: Block concurrent requests from overlapping
       if (isSaving.current) {
-        console.warn('[useAutosave] Overlapping request detected. Skipping save event.');
+        console.warn(
+          '[useAutosave] Overlapping request detected. Skipping save event.'
+        );
         return;
       }
 
@@ -72,13 +74,17 @@ export default function useAutosave({
             setSaveStatus('saved');
           } else {
             setSaveStatus('unsaved');
-            toast.error(response.data?.message || 'Failed to autosave changes.');
+            toast.error(
+              response.data?.message || 'Failed to autosave changes.'
+            );
           }
         }
       } catch (error) {
         console.error('[useAutosave]', error);
         setSaveStatus('unsaved');
-        toast.error(error.response?.data?.message || 'Connection error during autosave.');
+        toast.error(
+          error.response?.data?.message || 'Connection error during autosave.'
+        );
       } finally {
         isSaving.current = false;
       }

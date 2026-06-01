@@ -31,7 +31,9 @@ export default function SectionWrapper({
               <Icon className="h-5 w-5" />
             </div>
           )}
-          <h2 className="text-xl font-bold tracking-tight text-white">{title}</h2>
+          <h2 className="text-xl font-bold tracking-tight text-white">
+            {title}
+          </h2>
         </div>
         {description && (
           <p className="mt-2 text-sm text-slate-400 max-w-2xl leading-relaxed">

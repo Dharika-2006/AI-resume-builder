@@ -1,5 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { CloudCheck, CloudLightning, CloudUpload, AlertCircle } from 'lucide-react';
+import {
+  CloudCheck,
+  CloudLightning,
+  CloudUpload,
+  AlertCircle,
+} from 'lucide-react';
 
 /**
  * SaveStatus

@@ -1,5 +1,14 @@
 import { motion } from 'framer-motion';
-import { User, FileText, GraduationCap, Briefcase, Code, Cpu, Award, LayoutGrid } from 'lucide-react';
+import {
+  User,
+  FileText,
+  GraduationCap,
+  Briefcase,
+  Code,
+  Cpu,
+  Award,
+  LayoutGrid,
+} from 'lucide-react';
 
 /**
  * BuilderSidebar
@@ -51,7 +60,9 @@ export default function BuilderSidebar({ activeSection, setActiveSection }) {
                 />
               )}
 
-              <Icon className={`h-4 w-4 shrink-0 transition-colors ${isActive ? 'text-blue-400' : 'text-slate-500 group-hover:text-white'}`} />
+              <Icon
+                className={`h-4 w-4 shrink-0 transition-colors ${isActive ? 'text-blue-400' : 'text-slate-500 group-hover:text-white'}`}
+              />
               <span className="truncate">{link.name}</span>
             </button>
           );

@@ -1,5 +1,15 @@
 import { motion } from 'framer-motion';
-import { Pencil, Copy, Trash2, FileText, Calendar, GraduationCap, Briefcase, Code, Loader2 } from 'lucide-react';
+import {
+  Pencil,
+  Copy,
+  Trash2,
+  FileText,
+  Calendar,
+  GraduationCap,
+  Briefcase,
+  Code,
+  Loader2,
+} from 'lucide-react';
 import {
   formatResumeDate,
   getTemplateColor,
@@ -22,7 +32,8 @@ export default function ResumeCard({
   isDeleting = false,
 }) {
   const templateStyle = getTemplateColor(resume.template);
-  const { educationCount, experienceCount, projectCount } = getResumePreview(resume);
+  const { educationCount, experienceCount, projectCount } =
+    getResumePreview(resume);
   const completion = getCompletionPercentage(resume);
 
   return (
@@ -32,7 +43,9 @@ export default function ResumeCard({
       className="group relative overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/40 p-6 backdrop-blur-xl transition-all duration-300 hover:border-slate-700/80 hover:shadow-2xl hover:shadow-blue-500/5"
     >
       {/* Background ambient light effects */}
-      <div className={`absolute -right-16 -top-16 h-32 w-32 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-60 bg-gradient-to-tr ${templateStyle.gradient}`} />
+      <div
+        className={`absolute -right-16 -top-16 h-32 w-32 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-60 bg-gradient-to-tr ${templateStyle.gradient}`}
+      />
 
       {/* Header: Title and Template Badge */}
       <div className="flex items-start justify-between gap-4">
@@ -41,7 +54,10 @@ export default function ResumeCard({
             <FileText className="h-5 w-5 text-slate-400 group-hover:text-blue-400 transition-colors duration-300" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white leading-snug tracking-tight truncate max-w-[160px] md:max-w-[200px]" title={resume.title}>
+            <h3
+              className="text-base font-bold text-white leading-snug tracking-tight truncate max-w-[160px] md:max-w-[200px]"
+              title={resume.title}
+            >
               {resume.title}
             </h3>
             <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 font-semibold uppercase tracking-wider mt-0.5">
@@ -51,7 +67,9 @@ export default function ResumeCard({
           </div>
         </div>
 
-        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-wider uppercase ${templateStyle.bg}`}>
+        <span
+          className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-wider uppercase ${templateStyle.bg}`}
+        >
           {resume.template}
         </span>
       </div>

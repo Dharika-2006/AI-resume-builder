@@ -77,7 +77,8 @@ export default function SkillsForm({ data = [], onChange }) {
           </div>
         ) : (
           <p className="text-xs text-slate-500 italic pl-1">
-            No skill tags appended yet. Add languages or tools above to populate details.
+            No skill tags appended yet. Add languages or tools above to populate
+            details.
           </p>
         )}
       </div>

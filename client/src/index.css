@@ -1,3 +1,226 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 20mm 15mm 20mm 15mm !important; /* Enforces uniform spacing at top, bottom, and sides of every page */
+  }
+
+  /* Hide all editing components, navbars, buttons, and status indicators */
+  .no-print,
+  nav,
+  aside,
+  header,
+  footer,
+  button,
+  .save-status,
+  .sub-header {
+    display: none !important;
+  }
+
+  /* Reset print viewport and HTML/body layout */
+  html,
+  body,
+  #root {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #090d16 !important; /* Solid dark theme bleed background */
+    color: #cbd5e1 !important; /* Crisp text color */
+    overflow: visible !important;
+  }
+
+  /* Strip layout borders and height constraints from the hierarchy */
+  .print-parent-wrapper {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    position: static !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .print-preview-container {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    position: static !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Style the high-fidelity resume preview element for printing */
+  #resume-preview-root {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0 !important; /* Set to 0 because @page margins handle page boundaries perfectly! */
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important; /* Remove rounded borders for professional PDF documents */
+    box-shadow: none !important;
+    background: transparent !important; /* Let body background handle solid bleed */
+    color: #cbd5e1 !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* Force background styling & graphics to output exactly in high fidelity */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ── Export-only Solid Color Theme (Bypasses Canvas Blur/Opacity limitations) ── */
+.resume-export-theme {
+  background-color: #020617 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.resume-export-theme h1,
+.resume-export-theme h2,
+.resume-export-theme h3,
+.resume-export-theme h4,
+.resume-export-theme span,
+.resume-export-theme p,
+.resume-export-theme div,
+.resume-export-theme a {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Force high-contrast crisp text colors */
+.resume-export-theme .text-slate-300,
+.resume-export-theme .text-slate-350,
+.resume-export-theme .text-slate-400,
+.resume-export-theme .text-slate-450,
+.resume-export-theme .text-slate-500,
+.resume-export-theme .text-slate-550 {
+  color: #e2e8f0 !important; /* Force high-contrast slate text */
+}
+
+.resume-export-theme .text-white {
+  color: #ffffff !important;
+}
+
+/* Replace semi-transparent background cards with solid dark slate */
+.resume-export-theme .bg-slate-900\/40,
+.resume-export-theme .bg-slate-950\/30,
+.resume-export-theme .bg-slate-900\/10,
+.resume-export-theme .bg-slate-900\/50,
+.resume-export-theme .bg-slate-900,
+.resume-export-theme .bg-slate-950 {
+  background-color: #0f172a !important; /* Solid dark Slate 900 */
+}
+
+/* Replace semi-transparent borders with solid dark borders */
+.resume-export-theme .border-slate-800\/80,
+.resume-export-theme .border-slate-850,
+.resume-export-theme .border-slate-800,
+.resume-export-theme .border-slate-700\/60 {
+  border-color: #1e293b !important; /* Solid Slate 800 */
+}
+
+/* Force solid accent text colors */
+.resume-export-theme .text-cyan-400,
+.resume-export-theme .text-blue-400,
+.resume-export-theme .text-blue-450 {
+  color: #0ea5e9 !important; /* Solid sky-500 cyan accent */
+}
+
+/* Force solid badge backgrounds and cyan accents */
+.resume-export-theme .bg-cyan-500\/10,
+.resume-export-theme .bg-blue-500\/10,
+.resume-export-theme .bg-cyan-950\/40,
+.resume-export-theme .bg-blue-950\/40 {
+  background-color: #0c1a30 !important; /* Solid dark blue accent badge background */
+  color: #0ea5e9 !important;
+  border-color: #0ea5e9 !important;
+}
+
+.resume-export-theme .border-cyan-500\/20,
+.resume-export-theme .border-blue-500\/20,
+.resume-export-theme .border-cyan-500\/30,
+.resume-export-theme .border-blue-500\/30,
+.resume-export-theme .border-cyan-900\/60,
+.resume-export-theme .border-blue-900\/60 {
+  border-color: #0ea5e9 !important; /* Solid sky-500 border line */
+}
+
+/* ── PDF Export Page-Break and Spacing Layout Adjustments ── */
+
+/* Add bottom padding to the PDF container to ensure space at the end */
+.resume-export-theme {
+  padding-bottom: 32px !important; /* 24-32px bottom padding */
+}
+
+/* Advanced vertical spacing above Certifications */
+.resume-section-certifications {
+  margin-top: 38px !important; /* 12-16px more top margin than standard 24px (24 + 14 = 38px) */
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Precision dimensions for certification cards inside PDF grids */
+.certification-card {
+  padding: 12px !important; /* 12px padding fits text perfectly without vertical slicing */
+  border-radius: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep page-break protection ONLY on individual items/cards */
+.project-card,
+.project-item,
+.experience-item,
+.education-item,
+.certification-card {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.certification-card {
+  width: 100%;
+  min-height: 72px;
+  box-sizing: border-box;
+  overflow: visible;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}

@@ -27,16 +27,18 @@ export const formatResumeDate = (dateString) => {
 export const duplicateResumePayload = (resume) => {
   if (!resume) return {};
 
-  const personalInfo = resume.personalInfo ? {
-    name: resume.personalInfo.name,
-    email: resume.personalInfo.email,
-    phone: resume.personalInfo.phone,
-    location: resume.personalInfo.location,
-    linkedin: resume.personalInfo.linkedin,
-    github: resume.personalInfo.github,
-    portfolio: resume.personalInfo.portfolio,
-    summary: resume.personalInfo.summary,
-  } : undefined;
+  const personalInfo = resume.personalInfo
+    ? {
+        name: resume.personalInfo.name,
+        email: resume.personalInfo.email,
+        phone: resume.personalInfo.phone,
+        location: resume.personalInfo.location,
+        linkedin: resume.personalInfo.linkedin,
+        github: resume.personalInfo.github,
+        portfolio: resume.personalInfo.portfolio,
+        summary: resume.personalInfo.summary,
+      }
+    : undefined;
 
   const education = resume.education?.map((edu) => ({
     degree: edu.degree,
@@ -152,9 +154,13 @@ export const sortResumes = (resumes, sortBy) => {
 
   switch (sortBy) {
     case 'newest':
-      return items.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+      return items.sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+      );
     case 'oldest':
-      return items.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+      return items.sort(
+        (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
+      );
     case 'alphabetical':
       return items.sort((a, b) => a.title.localeCompare(b.title));
     default:

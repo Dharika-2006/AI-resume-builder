@@ -1,13 +1,28 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, User, Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  Loader2,
+  CheckCircle2,
+  XCircle,
+} from 'lucide-react';
 import AuthLayout from '../components/AuthLayout';
 import useAuthStore from '../store/authStore';
 
 const PasswordRule = ({ passed, label }) => (
-  <div className={`flex items-center gap-1.5 text-xs ${passed ? 'text-emerald-400' : 'text-slate-500'}`}>
-    {passed ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+  <div
+    className={`flex items-center gap-1.5 text-xs ${passed ? 'text-emerald-400' : 'text-slate-500'}`}
+  >
+    {passed ? (
+      <CheckCircle2 className="w-3 h-3" />
+    ) : (
+      <XCircle className="w-3 h-3" />
+    )}
     {label}
   </div>
 );
@@ -42,7 +57,8 @@ const Register = () => {
     if (!form.password) errs.password = 'Password is required.';
     else if (form.password.length < 6)
       errs.password = 'Password must be at least 6 characters.';
-    if (!form.confirmPassword) errs.confirmPassword = 'Please confirm your password.';
+    if (!form.confirmPassword)
+      errs.confirmPassword = 'Please confirm your password.';
     else if (form.password !== form.confirmPassword)
       errs.confirmPassword = 'Passwords do not match.';
     setErrors(errs);
@@ -73,7 +89,9 @@ const Register = () => {
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         {/* Full Name */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Full Name
+          </label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
             <input
@@ -87,12 +105,16 @@ const Register = () => {
               } text-white placeholder-slate-500 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all`}
             />
           </div>
-          {errors.name && <p className="text-red-400 text-xs mt-1.5">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-red-400 text-xs mt-1.5">{errors.name}</p>
+          )}
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">Email address</label>
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Email address
+          </label>
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
             <input
@@ -106,12 +128,16 @@ const Register = () => {
               } text-white placeholder-slate-500 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all`}
             />
           </div>
-          {errors.email && <p className="text-red-400 text-xs mt-1.5">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-400 text-xs mt-1.5">{errors.email}</p>
+          )}
         </div>
 
         {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Password
+          </label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
             <input
@@ -130,10 +156,16 @@ const Register = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
             </button>
           </div>
-          {errors.password && <p className="text-red-400 text-xs mt-1.5">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-400 text-xs mt-1.5">{errors.password}</p>
+          )}
 
           {/* Live password rules */}
           {passwordFocused && form.password.length > 0 && (
@@ -142,16 +174,27 @@ const Register = () => {
               animate={{ opacity: 1, height: 'auto' }}
               className="mt-2 grid grid-cols-2 gap-1"
             >
-              <PasswordRule passed={passwordRules.length} label="At least 6 characters" />
-              <PasswordRule passed={passwordRules.hasLetter} label="Contains a letter" />
-              <PasswordRule passed={passwordRules.hasNumber} label="Contains a number" />
+              <PasswordRule
+                passed={passwordRules.length}
+                label="At least 6 characters"
+              />
+              <PasswordRule
+                passed={passwordRules.hasLetter}
+                label="Contains a letter"
+              />
+              <PasswordRule
+                passed={passwordRules.hasNumber}
+                label="Contains a number"
+              />
             </motion.div>
           )}
         </div>
 
         {/* Confirm Password */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">Confirm Password</label>
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Confirm Password
+          </label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
             <input
@@ -163,9 +206,10 @@ const Register = () => {
               className={`w-full bg-slate-800/60 border ${
                 errors.confirmPassword
                   ? 'border-red-500/70'
-                  : form.confirmPassword && form.password === form.confirmPassword
-                  ? 'border-emerald-500/60'
-                  : 'border-slate-700'
+                  : form.confirmPassword &&
+                      form.password === form.confirmPassword
+                    ? 'border-emerald-500/60'
+                    : 'border-slate-700'
               } text-white placeholder-slate-500 rounded-xl pl-10 pr-10 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all`}
             />
             <button
@@ -173,25 +217,38 @@ const Register = () => {
               onClick={() => setShowConfirm(!showConfirm)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
             >
-              {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showConfirm ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-red-400 text-xs mt-1.5">{errors.confirmPassword}</p>
-          )}
-          {form.confirmPassword && form.password === form.confirmPassword && !errors.confirmPassword && (
-            <p className="text-emerald-400 text-xs mt-1.5 flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" /> Passwords match
+            <p className="text-red-400 text-xs mt-1.5">
+              {errors.confirmPassword}
             </p>
           )}
+          {form.confirmPassword &&
+            form.password === form.confirmPassword &&
+            !errors.confirmPassword && (
+              <p className="text-emerald-400 text-xs mt-1.5 flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3" /> Passwords match
+              </p>
+            )}
         </div>
 
         {/* Terms */}
         <p className="text-xs text-slate-600 leading-relaxed">
           By creating an account, you agree to our{' '}
-          <span className="text-slate-400 cursor-pointer hover:text-white transition-colors">Terms of Service</span>{' '}
+          <span className="text-slate-400 cursor-pointer hover:text-white transition-colors">
+            Terms of Service
+          </span>{' '}
           and{' '}
-          <span className="text-slate-400 cursor-pointer hover:text-white transition-colors">Privacy Policy</span>.
+          <span className="text-slate-400 cursor-pointer hover:text-white transition-colors">
+            Privacy Policy
+          </span>
+          .
         </p>
 
         {/* Submit */}
@@ -216,7 +273,10 @@ const Register = () => {
       {/* Login link */}
       <p className="text-center text-sm text-slate-500 mt-6">
         Already have an account?{' '}
-        <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+        <Link
+          to="/login"
+          className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+        >
           Sign in
         </Link>
       </p>

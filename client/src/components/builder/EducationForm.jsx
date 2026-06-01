@@ -54,7 +54,9 @@ export default function EducationForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. B.S. in Computer Science"
                   value={item.degree || ''}
-                  onChange={(e) => handleFieldChange(index, 'degree', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'degree', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -68,7 +70,9 @@ export default function EducationForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. Stanford University"
                   value={item.institution || ''}
-                  onChange={(e) => handleFieldChange(index, 'institution', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'institution', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -82,7 +86,9 @@ export default function EducationForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. 2020 - 2024"
                   value={item.year || ''}
-                  onChange={(e) => handleFieldChange(index, 'year', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'year', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -96,7 +102,9 @@ export default function EducationForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. 3.8 / 4.0 or 9.2 / 10"
                   value={item.cgpa || ''}
-                  onChange={(e) => handleFieldChange(index, 'cgpa', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'cgpa', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>

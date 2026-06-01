@@ -41,7 +41,11 @@ const useAuthStore = create((set, get) => ({
   register: async (name, email, password) => {
     set({ loading: true });
     try {
-      const { token, user } = await authService.register({ name, email, password });
+      const { token, user } = await authService.register({
+        name,
+        email,
+        password,
+      });
       get()._setToken(token);
       set({ user, isAuthenticated: true, loading: false });
       toast.success('Account created! Welcome aboard 🎉');

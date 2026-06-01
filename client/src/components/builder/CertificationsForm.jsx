@@ -54,7 +54,9 @@ export default function CertificationsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. AWS Certified Solutions Architect"
                   value={item.name || ''}
-                  onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'name', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -68,7 +70,9 @@ export default function CertificationsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. Amazon Web Services"
                   value={item.issuer || ''}
-                  onChange={(e) => handleFieldChange(index, 'issuer', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'issuer', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -82,7 +86,9 @@ export default function CertificationsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. 2023"
                   value={item.year || ''}
-                  onChange={(e) => handleFieldChange(index, 'year', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'year', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>

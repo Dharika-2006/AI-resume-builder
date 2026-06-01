@@ -14,7 +14,8 @@ export const dashboardStats = {
 export const quickActions = [
   {
     title: 'Create New Resume',
-    description: 'Design a professional resume in minutes using AI-tailored text recommendations and modern layout designs.',
+    description:
+      'Design a professional resume in minutes using AI-tailored text recommendations and modern layout designs.',
     badgeText: 'Create',
     badgeType: 'primary',
     linkTo: '/builder/new',
@@ -23,7 +24,8 @@ export const quickActions = [
   },
   {
     title: 'My Resumes',
-    description: 'Manage, edit, duplicate, or export your saved resumes to high-fidelity PDF formats anytime.',
+    description:
+      'Manage, edit, duplicate, or export your saved resumes to high-fidelity PDF formats anytime.',
     badgeText: `${dashboardStats.resumes} Saved`,
     badgeType: 'success',
     linkTo: '/resumes',
@@ -32,7 +34,8 @@ export const quickActions = [
   },
   {
     title: 'ATS Analyzer',
-    description: 'Upload your resume alongside a job description to extract match percentages and detailed keyword improvements.',
+    description:
+      'Upload your resume alongside a job description to extract match percentages and detailed keyword improvements.',
     badgeText: 'AI Powered',
     badgeType: 'accent',
     linkTo: '/ats',
@@ -41,7 +44,8 @@ export const quickActions = [
   },
   {
     title: 'Profile Settings',
-    description: 'Adjust your user preferences, career levels, and core fields for automated resume pre-filling.',
+    description:
+      'Adjust your user preferences, career levels, and core fields for automated resume pre-filling.',
     badgeText: 'Account',
     badgeType: 'default',
     linkTo: '/profile',

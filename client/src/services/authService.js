@@ -6,7 +6,11 @@ export const authService = {
    * @returns {{ token: string, user: object }}
    */
   register: async ({ name, email, password }) => {
-    const response = await api.post('/auth/register', { name, email, password });
+    const response = await api.post('/auth/register', {
+      name,
+      email,
+      password,
+    });
     return response.data.data; // { token, user }
   },
 

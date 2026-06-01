@@ -1,7 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, LogOut, User, FileText, Cpu, LayoutDashboard, ChevronDown } from 'lucide-react';
+import {
+  Menu,
+  X,
+  LogOut,
+  User,
+  FileText,
+  Cpu,
+  LayoutDashboard,
+  ChevronDown,
+} from 'lucide-react';
 import useAuthStore from '../store/authStore';
 
 export default function Navbar() {
@@ -54,7 +63,10 @@ export default function Navbar() {
                 </div>
               </div>
               <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent group-hover:opacity-90">
-                Resu<span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">AI</span>
+                Resu
+                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  AI
+                </span>
               </span>
             </Link>
           </div>
@@ -93,7 +105,9 @@ export default function Navbar() {
                 <span className="max-w-[120px] truncate text-sm font-medium text-slate-300">
                   {user?.name?.split(' ')[0] || 'User'}
                 </span>
-                <ChevronDown className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                />
               </button>
 
               <AnimatePresence>
@@ -106,8 +120,12 @@ export default function Navbar() {
                     className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl border border-slate-800 bg-slate-900/95 p-2 shadow-2xl backdrop-blur-xl"
                   >
                     <div className="px-3 py-2 border-b border-slate-800/60 mb-1.5">
-                      <p className="text-sm font-semibold text-white truncate">{user?.name || 'Full Name'}</p>
-                      <p className="text-xs text-slate-500 truncate mt-0.5">{user?.email || 'email@example.com'}</p>
+                      <p className="text-sm font-semibold text-white truncate">
+                        {user?.name || 'Full Name'}
+                      </p>
+                      <p className="text-xs text-slate-500 truncate mt-0.5">
+                        {user?.email || 'email@example.com'}
+                      </p>
                     </div>
 
                     <Link
@@ -141,7 +159,11 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center rounded-xl p-2 text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -183,8 +205,12 @@ export default function Navbar() {
                     {getInitials(user?.name)}
                   </div>
                   <div className="truncate">
-                    <p className="text-sm font-semibold text-white truncate leading-none">{user?.name || 'User'}</p>
-                    <p className="text-xs text-slate-500 truncate mt-1 leading-none">{user?.email || 'email@example.com'}</p>
+                    <p className="text-sm font-semibold text-white truncate leading-none">
+                      {user?.name || 'User'}
+                    </p>
+                    <p className="text-xs text-slate-500 truncate mt-1 leading-none">
+                      {user?.email || 'email@example.com'}
+                    </p>
                   </div>
                 </div>
                 <button

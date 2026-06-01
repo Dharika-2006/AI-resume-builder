@@ -5,7 +5,7 @@ import { Globe, Mail, Phone, MapPin, Link as LinkIcon } from 'lucide-react';
  * - Renders a high-fidelity real-time visual preview of the user's resume
  * - Dynamically shifts layouts based on MODERN, CORPORATE, or MINIMAL values
  */
-export default function ResumePreview({ data = {} }) {
+export default function ResumePreview({ data = {}, isExport = false }) {
   const {
     title = 'Untitled Resume',
     template = 'MODERN',
@@ -45,15 +45,26 @@ export default function ResumePreview({ data = {} }) {
   // Render Section Helper
   const SectionHeader = ({ text }) => (
     <div className="flex flex-col mb-4">
-      <h4 className={`text-xs font-bold uppercase tracking-widest ${currentStyle.accentText}`}>
+      <h4
+        className={`text-xs font-bold uppercase tracking-widest ${currentStyle.accentText}`}
+      >
         {text}
       </h4>
-      <div className={`mt-1.5 border-b-[1.5px] ${currentStyle.borderLine} w-full`} />
+      <div
+        className={`mt-1.5 border-b-[1.5px] ${currentStyle.borderLine} w-full`}
+      />
     </div>
   );
 
   return (
-    <div className="w-full bg-slate-900/40 border border-slate-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl overflow-y-auto max-h-[calc(100vh-6rem)] sticky top-20 text-slate-300 font-sans leading-relaxed select-none">
+    <div
+      id={isExport ? 'resume-export-root' : 'resume-preview-root'}
+      className={
+        isExport
+          ? 'resume-export-theme w-full bg-[#020617] p-8 font-sans leading-relaxed select-none'
+          : 'w-full bg-slate-900/40 border border-slate-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl overflow-y-auto max-h-[calc(100vh-6rem)] sticky top-20 text-slate-300 font-sans leading-relaxed select-none'
+      }
+    >
       {/* Dynamic Template Containers */}
 
       {/* ── MODERN TEMPLATE ────────────────────────────────────── */}
@@ -70,22 +81,40 @@ export default function ResumePreview({ data = {} }) {
             {/* Contact Grid */}
             <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-xs text-slate-400 font-medium">
               {personalInfo.email && (
-                <span className="flex items-center gap-1"><Mail className="h-3.5 w-3.5 text-cyan-400" />{personalInfo.email}</span>
+                <span className="flex items-center gap-1">
+                  <Mail className="h-3.5 w-3.5 text-cyan-400" />
+                  {personalInfo.email}
+                </span>
               )}
               {personalInfo.phone && (
-                <span className="flex items-center gap-1"><Phone className="h-3.5 w-3.5 text-cyan-400" />{personalInfo.phone}</span>
+                <span className="flex items-center gap-1">
+                  <Phone className="h-3.5 w-3.5 text-cyan-400" />
+                  {personalInfo.phone}
+                </span>
               )}
               {personalInfo.location && (
-                <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5 text-cyan-400" />{personalInfo.location}</span>
+                <span className="flex items-center gap-1">
+                  <MapPin className="h-3.5 w-3.5 text-cyan-400" />
+                  {personalInfo.location}
+                </span>
               )}
               {personalInfo.linkedin && (
-                <span className="flex items-center gap-1"><LinkIcon className="h-3.5 w-3.5 text-cyan-400" />{personalInfo.linkedin}</span>
+                <span className="flex items-center gap-1">
+                  <LinkIcon className="h-3.5 w-3.5 text-cyan-400" />
+                  {personalInfo.linkedin}
+                </span>
               )}
               {personalInfo.github && (
-                <span className="flex items-center gap-1"><LinkIcon className="h-3.5 w-3.5 text-cyan-400" />{personalInfo.github}</span>
+                <span className="flex items-center gap-1">
+                  <LinkIcon className="h-3.5 w-3.5 text-cyan-400" />
+                  {personalInfo.github}
+                </span>
               )}
               {personalInfo.portfolio && (
-                <span className="flex items-center gap-1"><Globe className="h-3.5 w-3.5 text-cyan-400" />{personalInfo.portfolio}</span>
+                <span className="flex items-center gap-1">
+                  <Globe className="h-3.5 w-3.5 text-cyan-400" />
+                  {personalInfo.portfolio}
+                </span>
               )}
             </div>
           </div>
@@ -102,17 +131,24 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Experience Array */}
           {experience.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Work Experience" />
               <div className="space-y-4">
                 {experience.map((item, idx) => (
-                  <div key={idx} className="flex flex-col">
+                  <div key={idx} className="flex flex-col experience-item">
                     <div className="flex items-center justify-between text-xs md:text-sm font-bold text-white">
                       <span>{item.role || 'Job Role'}</span>
-                      <span className="text-cyan-400 font-semibold">{item.startDate} {item.endDate ? `- ${item.endDate}` : ''}</span>
+                      <span className="text-cyan-400 font-semibold">
+                        {item.startDate}{' '}
+                        {item.endDate ? `- ${item.endDate}` : ''}
+                      </span>
                     </div>
-                    <span className="text-xs text-slate-400 font-semibold mt-0.5">{item.company || 'Company Name'}</span>
-                    <p className="mt-1.5 text-xs text-slate-350 leading-relaxed whitespace-pre-line">{item.description}</p>
+                    <span className="text-xs text-slate-400 font-semibold mt-0.5">
+                      {item.company || 'Company Name'}
+                    </span>
+                    <p className="mt-1.5 text-xs text-slate-350 leading-relaxed whitespace-pre-line">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -121,14 +157,19 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Education Array */}
           {education.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Education" />
               <div className="space-y-4">
                 {education.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm education-item"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.degree || 'Degree Title'}</span>
-                      <span className="text-cyan-400 font-semibold">{item.year}</span>
+                      <span className="text-cyan-400 font-semibold">
+                        {item.year}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-xs text-slate-400 font-semibold mt-0.5">
                       <span>{item.institution || 'Institution School'}</span>
@@ -142,19 +183,46 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Projects Array */}
           {projects.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Projects" />
               <div className="space-y-4">
                 {projects.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm project-card"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.name || 'Project Name'}</span>
-                      {item.techStack && <span className="text-xs text-cyan-400 font-semibold">{item.techStack}</span>}
+                      {item.techStack && (
+                        <span className="text-xs text-cyan-400 font-semibold">
+                          {item.techStack}
+                        </span>
+                      )}
                     </div>
-                    <p className="mt-1 text-xs text-slate-350 leading-relaxed">{item.description}</p>
+                    <p className="mt-1 text-xs text-slate-350 leading-relaxed">
+                      {item.description}
+                    </p>
                     <div className="flex gap-3 mt-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                      {item.githubLink && <span>Repo: {item.githubLink}</span>}
-                      {item.liveLink && <span>Live: {item.liveLink}</span>}
+                      {item.githubLink && (
+                        <a
+                          href={item.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          Repo: {item.githubLink}
+                        </a>
+                      )}
+                      {item.liveLink && (
+                        <a
+                          href={item.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          Live: {item.liveLink}
+                        </a>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -164,11 +232,14 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Skills Tags */}
           {skills.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Skills & Tools" />
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {skills.map((skill, idx) => (
-                  <span key={idx} className="px-2.5 py-1 text-[11px] font-semibold border rounded-lg bg-cyan-950/40 text-cyan-400 border-cyan-900/60">
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 text-[11px] font-semibold border rounded-lg bg-cyan-950/40 text-cyan-400 border-cyan-900/60"
+                  >
                     {skill.name}
                   </span>
                 ))}
@@ -178,14 +249,23 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Certifications Array */}
           {certifications.length > 0 && (
-            <div>
+            <div className="resume-section resume-section-certifications">
               <SectionHeader text="Certifications" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="certifications-grid">
                 {certifications.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs border border-slate-800 bg-slate-950/30 p-2.5 rounded-xl">
-                    <span className="font-bold text-white truncate">{item.name || 'Credential'}</span>
-                    <span className="text-slate-500 font-semibold mt-0.5 truncate">{item.issuer || 'Issuer'}</span>
-                    <span className="text-[10px] text-cyan-400 font-bold mt-1">{item.year}</span>
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs border border-slate-800 bg-slate-950/30 p-3 rounded-xl certification-card"
+                  >
+                    <span className="font-bold text-white break-words">
+                      {item.name || 'Credential'}
+                    </span>
+                    <span className="text-slate-500 font-semibold mt-0.5 break-words">
+                      {item.issuer || 'Issuer'}
+                    </span>
+                    <span className="text-[10px] text-cyan-400 font-bold mt-1">
+                      {item.year}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -212,7 +292,9 @@ export default function ResumePreview({ data = {} }) {
               {personalInfo.location && <span>• {personalInfo.location}</span>}
               {personalInfo.linkedin && <span>• {personalInfo.linkedin}</span>}
               {personalInfo.github && <span>• {personalInfo.github}</span>}
-              {personalInfo.portfolio && <span>• {personalInfo.portfolio}</span>}
+              {personalInfo.portfolio && (
+                <span>• {personalInfo.portfolio}</span>
+              )}
             </div>
           </div>
 
@@ -228,17 +310,24 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Experience Array */}
           {experience.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Employment History" />
               <div className="space-y-4">
                 {experience.map((item, idx) => (
-                  <div key={idx} className="flex flex-col">
+                  <div key={idx} className="flex flex-col experience-item">
                     <div className="flex items-center justify-between text-xs md:text-sm font-bold text-white">
                       <span>{item.role || 'Job Role'}</span>
-                      <span className="text-blue-450 font-semibold">{item.startDate} {item.endDate ? `- ${item.endDate}` : ''}</span>
+                      <span className="text-blue-450 font-semibold">
+                        {item.startDate}{' '}
+                        {item.endDate ? `- ${item.endDate}` : ''}
+                      </span>
                     </div>
-                    <span className="text-xs text-slate-400 font-semibold mt-0.5 uppercase tracking-wider">{item.company || 'Company Name'}</span>
-                    <p className="mt-1.5 text-xs text-slate-350 leading-relaxed whitespace-pre-line border-l-2 border-blue-900/40 pl-3 ml-0.5">{item.description}</p>
+                    <span className="text-xs text-slate-400 font-semibold mt-0.5 uppercase tracking-wider">
+                      {item.company || 'Company Name'}
+                    </span>
+                    <p className="mt-1.5 text-xs text-slate-350 leading-relaxed whitespace-pre-line border-l-2 border-blue-900/40 pl-3 ml-0.5">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -247,14 +336,19 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Education Array */}
           {education.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Education Details" />
               <div className="space-y-3">
                 {education.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm education-item"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.degree || 'Degree Title'}</span>
-                      <span className="text-blue-450 font-semibold">{item.year}</span>
+                      <span className="text-blue-450 font-semibold">
+                        {item.year}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-xs text-slate-400 font-semibold mt-0.5">
                       <span>{item.institution || 'Institution School'}</span>
@@ -268,19 +362,46 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Projects Array */}
           {projects.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Technical Projects" />
               <div className="space-y-4">
                 {projects.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm project-card"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.name || 'Project Name'}</span>
-                      {item.techStack && <span className="text-xs text-blue-400 font-semibold">{item.techStack}</span>}
+                      {item.techStack && (
+                        <span className="text-xs text-blue-400 font-semibold">
+                          {item.techStack}
+                        </span>
+                      )}
                     </div>
-                    <p className="mt-1 text-xs text-slate-350 leading-relaxed">{item.description}</p>
+                    <p className="mt-1 text-xs text-slate-350 leading-relaxed">
+                      {item.description}
+                    </p>
                     <div className="flex gap-3 mt-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                      {item.githubLink && <span>Source: {item.githubLink}</span>}
-                      {item.liveLink && <span>Production: {item.liveLink}</span>}
+                      {item.githubLink && (
+                        <a
+                          href={item.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          Source: {item.githubLink}
+                        </a>
+                      )}
+                      {item.liveLink && (
+                        <a
+                          href={item.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          Production: {item.liveLink}
+                        </a>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -290,11 +411,14 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Skills Tags */}
           {skills.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Key Expertise & Skills" />
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {skills.map((skill, idx) => (
-                  <span key={idx} className="px-2.5 py-1 text-[11px] font-semibold border rounded-lg bg-blue-950/40 text-blue-400 border-blue-900/60">
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 text-[11px] font-semibold border rounded-lg bg-blue-950/40 text-blue-400 border-blue-900/60"
+                  >
                     {skill.name}
                   </span>
                 ))}
@@ -304,16 +428,23 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Certifications Array */}
           {certifications.length > 0 && (
-            <div>
+            <div className="resume-section resume-section-certifications">
               <SectionHeader text="Certifications & Endorsements" />
-              <div className="space-y-2">
+              <div className="certifications-grid">
                 {certifications.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between text-xs border-b border-slate-800/40 pb-2">
-                    <div className="flex flex-col">
-                      <span className="font-bold text-white">{item.name || 'Credential'}</span>
-                      <span className="text-slate-500 font-semibold text-[10px]">{item.issuer || 'Issuer'}</span>
-                    </div>
-                    <span className="text-[10px] text-blue-400 font-bold uppercase tracking-wider">{item.year}</span>
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs border border-slate-800/80 bg-slate-900/10 p-3 rounded-xl certification-card"
+                  >
+                    <span className="font-bold text-white break-words">
+                      {item.name || 'Credential'}
+                    </span>
+                    <span className="text-slate-500 font-semibold mt-0.5 break-words">
+                      {item.issuer || 'Issuer'}
+                    </span>
+                    <span className="text-[10px] text-blue-400 font-bold mt-1">
+                      {item.year}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -337,10 +468,18 @@ export default function ResumePreview({ data = {} }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4 mt-2 text-xs text-slate-500 font-semibold">
               {personalInfo.email && <span>Email: {personalInfo.email}</span>}
               {personalInfo.phone && <span>Phone: {personalInfo.phone}</span>}
-              {personalInfo.location && <span>Loc: {personalInfo.location}</span>}
-              {personalInfo.linkedin && <span>LinkedIn: {personalInfo.linkedin}</span>}
-              {personalInfo.github && <span>GitHub: {personalInfo.github}</span>}
-              {personalInfo.portfolio && <span>Web: {personalInfo.portfolio}</span>}
+              {personalInfo.location && (
+                <span>Loc: {personalInfo.location}</span>
+              )}
+              {personalInfo.linkedin && (
+                <span>LinkedIn: {personalInfo.linkedin}</span>
+              )}
+              {personalInfo.github && (
+                <span>GitHub: {personalInfo.github}</span>
+              )}
+              {personalInfo.portfolio && (
+                <span>Web: {personalInfo.portfolio}</span>
+              )}
             </div>
           </div>
 
@@ -356,17 +495,27 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Experience Array */}
           {experience.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Experience" />
               <div className="space-y-4">
                 {experience.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm experience-item"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.role || 'Job Role'}</span>
-                      <span className="text-slate-450 font-semibold">{item.startDate} {item.endDate ? `- ${item.endDate}` : ''}</span>
+                      <span className="text-slate-450 font-semibold">
+                        {item.startDate}{' '}
+                        {item.endDate ? `- ${item.endDate}` : ''}
+                      </span>
                     </div>
-                    <span className="text-xs text-slate-500 font-semibold mt-0.5 italic">{item.company || 'Company Name'}</span>
-                    <p className="mt-1.5 text-xs text-slate-400 leading-relaxed whitespace-pre-line">{item.description}</p>
+                    <span className="text-xs text-slate-500 font-semibold mt-0.5 italic">
+                      {item.company || 'Company Name'}
+                    </span>
+                    <p className="mt-1.5 text-xs text-slate-400 leading-relaxed whitespace-pre-line">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -375,14 +524,19 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Education Array */}
           {education.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Academic Profile" />
               <div className="space-y-3">
                 {education.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm education-item"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.degree || 'Degree Title'}</span>
-                      <span className="text-slate-450 font-semibold">{item.year}</span>
+                      <span className="text-slate-450 font-semibold">
+                        {item.year}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-xs text-slate-550 mt-0.5">
                       <span>{item.institution || 'Institution School'}</span>
@@ -396,19 +550,44 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Projects Array */}
           {projects.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Key Projects" />
               <div className="space-y-3">
                 {projects.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs md:text-sm">
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs md:text-sm project-card"
+                  >
                     <div className="flex items-center justify-between font-bold text-white">
                       <span>{item.name || 'Project Name'}</span>
-                      <span className="text-xs text-slate-450 font-semibold">{item.techStack}</span>
+                      <span className="text-xs text-slate-450 font-semibold">
+                        {item.techStack}
+                      </span>
                     </div>
-                    <p className="mt-1 text-xs text-slate-400 leading-relaxed">{item.description}</p>
+                    <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+                      {item.description}
+                    </p>
                     <div className="flex gap-3 mt-1.5 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                      {item.githubLink && <span>Repo: {item.githubLink}</span>}
-                      {item.liveLink && <span>Link: {item.liveLink}</span>}
+                      {item.githubLink && (
+                        <a
+                          href={item.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          Repo: {item.githubLink}
+                        </a>
+                      )}
+                      {item.liveLink && (
+                        <a
+                          href={item.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          Link: {item.liveLink}
+                        </a>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -418,11 +597,14 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Skills Tags */}
           {skills.length > 0 && (
-            <div>
+            <div className="resume-section">
               <SectionHeader text="Core Skills" />
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {skills.map((skill, idx) => (
-                  <span key={idx} className="px-2.5 py-1 text-[11px] font-semibold border rounded-lg bg-slate-900/50 text-slate-300 border-slate-850">
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 text-[11px] font-semibold border rounded-lg bg-slate-900/50 text-slate-300 border-slate-850"
+                  >
                     {skill.name}
                   </span>
                 ))}
@@ -432,14 +614,23 @@ export default function ResumePreview({ data = {} }) {
 
           {/* Certifications Array */}
           {certifications.length > 0 && (
-            <div>
+            <div className="resume-section resume-section-certifications">
               <SectionHeader text="Certifications" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="certifications-grid">
                 {certifications.map((item, idx) => (
-                  <div key={idx} className="flex flex-col text-xs border border-slate-850 bg-slate-900/10 p-2.5 rounded-xl">
-                    <span className="font-bold text-white truncate">{item.name || 'Credential'}</span>
-                    <span className="text-slate-550 font-semibold mt-0.5 truncate">{item.issuer || 'Issuer'}</span>
-                    <span className="text-[10px] text-slate-450 font-bold mt-1">{item.year}</span>
+                  <div
+                    key={idx}
+                    className="flex flex-col text-xs border border-slate-850 bg-slate-900/10 p-3 rounded-xl certification-card"
+                  >
+                    <span className="font-bold text-white break-words">
+                      {item.name || 'Credential'}
+                    </span>
+                    <span className="text-slate-550 font-semibold mt-0.5 break-words">
+                      {item.issuer || 'Issuer'}
+                    </span>
+                    <span className="text-[10px] text-slate-450 font-bold mt-1">
+                      {item.year}
+                    </span>
                   </div>
                 ))}
               </div>

@@ -57,7 +57,9 @@ export default function ExperienceForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. Lead Engineer"
                   value={item.role || ''}
-                  onChange={(e) => handleFieldChange(index, 'role', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'role', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -71,7 +73,9 @@ export default function ExperienceForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. Google LLC"
                   value={item.company || ''}
-                  onChange={(e) => handleFieldChange(index, 'company', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'company', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -85,7 +89,9 @@ export default function ExperienceForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. Jan 2022"
                   value={item.startDate || ''}
-                  onChange={(e) => handleFieldChange(index, 'startDate', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'startDate', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -99,7 +105,9 @@ export default function ExperienceForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. Present or Dec 2023"
                   value={item.endDate || ''}
-                  onChange={(e) => handleFieldChange(index, 'endDate', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'endDate', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -113,7 +121,9 @@ export default function ExperienceForm({ data = [], onChange }) {
                   rows={4}
                   placeholder="e.g. Spearheaded development of dynamic dashboard controls, yielding a 35% decrease in page latency. Mentored 4 engineers and established strict unit test standards..."
                   value={item.description || ''}
-                  onChange={(e) => handleFieldChange(index, 'description', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'description', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all resize-y leading-relaxed"
                 />
               </div>

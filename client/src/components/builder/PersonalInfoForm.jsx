@@ -8,13 +8,44 @@ import SectionWrapper from './SectionWrapper';
  */
 export default function PersonalInfoForm({ data = {}, onChange, errors = {} }) {
   const fields = [
-    { key: 'name', label: 'Full Name', placeholder: 'e.g. John Doe', required: true },
-    { key: 'email', label: 'Email Address', placeholder: 'e.g. johndoe@example.com', type: 'email', required: true },
-    { key: 'phone', label: 'Phone Number', placeholder: 'e.g. +1 (555) 019-2834' },
-    { key: 'location', label: 'Location', placeholder: 'e.g. San Francisco, CA' },
-    { key: 'linkedin', label: 'LinkedIn URL', placeholder: 'e.g. linkedin.com/in/johndoe' },
-    { key: 'github', label: 'GitHub Link', placeholder: 'e.g. github.com/johndoe' },
-    { key: 'portfolio', label: 'Portfolio Link', placeholder: 'e.g. johndoe.dev' },
+    {
+      key: 'name',
+      label: 'Full Name',
+      placeholder: 'e.g. John Doe',
+      required: true,
+    },
+    {
+      key: 'email',
+      label: 'Email Address',
+      placeholder: 'e.g. johndoe@example.com',
+      type: 'email',
+      required: true,
+    },
+    {
+      key: 'phone',
+      label: 'Phone Number',
+      placeholder: 'e.g. +1 (555) 019-2834',
+    },
+    {
+      key: 'location',
+      label: 'Location',
+      placeholder: 'e.g. San Francisco, CA',
+    },
+    {
+      key: 'linkedin',
+      label: 'LinkedIn URL',
+      placeholder: 'e.g. linkedin.com/in/johndoe',
+    },
+    {
+      key: 'github',
+      label: 'GitHub Link',
+      placeholder: 'e.g. github.com/johndoe',
+    },
+    {
+      key: 'portfolio',
+      label: 'Portfolio Link',
+      placeholder: 'e.g. johndoe.dev',
+    },
   ];
 
   return (
@@ -30,11 +61,14 @@ export default function PersonalInfoForm({ data = {}, onChange, errors = {} }) {
             <div
               key={field.key}
               className={`flex flex-col ${
-                field.key === 'name' || field.key === 'email' ? 'col-span-1' : 'col-span-1'
+                field.key === 'name' || field.key === 'email'
+                  ? 'col-span-1'
+                  : 'col-span-1'
               }`}
             >
               <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                {field.label} {field.required && <span className="text-rose-500">*</span>}
+                {field.label}{' '}
+                {field.required && <span className="text-rose-500">*</span>}
               </label>
 
               <input

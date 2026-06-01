@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Plus, SlidersHorizontal, AlertCircle, FileText } from 'lucide-react';
+import {
+  Search,
+  Plus,
+  SlidersHorizontal,
+  AlertCircle,
+  FileText,
+} from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import api from '../services/api';
@@ -45,7 +51,9 @@ export default function MyResumes() {
       }
     } catch (err) {
       console.error('[fetchResumes]', err);
-      setError(err.response?.data?.message || 'Server error while fetching resumes.');
+      setError(
+        err.response?.data?.message || 'Server error while fetching resumes.'
+      );
     } finally {
       setLoading(false);
     }
@@ -58,7 +66,9 @@ export default function MyResumes() {
 
   // ── Deletion Handler ──
   const handleDelete = async (id) => {
-    const isConfirmed = window.confirm('Are you absolutely sure you want to delete this resume? All associated sections will be permanently removed.');
+    const isConfirmed = window.confirm(
+      'Are you absolutely sure you want to delete this resume? All associated sections will be permanently removed.'
+    );
     if (!isConfirmed) return;
 
     setActionStates((prev) => ({ ...prev, deletingId: id }));
@@ -72,7 +82,9 @@ export default function MyResumes() {
       }
     } catch (err) {
       console.error('[handleDelete]', err);
-      toast.error(err.response?.data?.message || 'An error occurred while deleting.');
+      toast.error(
+        err.response?.data?.message || 'An error occurred while deleting.'
+      );
     } finally {
       setActionStates((prev) => ({ ...prev, deletingId: null }));
     }
@@ -85,7 +97,9 @@ export default function MyResumes() {
       // 1. Fetch full nested tree details
       const response = await api.get(`/resumes/${id}`);
       if (!response.data?.success) {
-        throw new Error(response.data?.message || 'Failed to fetch details for duplication.');
+        throw new Error(
+          response.data?.message || 'Failed to fetch details for duplication.'
+        );
       }
 
       // 2. Format complete clone payload using helpers
@@ -105,7 +119,9 @@ export default function MyResumes() {
       }
     } catch (err) {
       console.error('[handleDuplicate]', err);
-      toast.error(err.response?.data?.message || 'An error occurred while duplicating.');
+      toast.error(
+        err.response?.data?.message || 'An error occurred while duplicating.'
+      );
     } finally {
       setActionStates((prev) => ({ ...prev, duplicatingId: null }));
     }
@@ -132,10 +148,14 @@ export default function MyResumes() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 border-b border-slate-800/50 pb-8 mb-8">
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              My <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Resumes</span>
+              My{' '}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                Resumes
+              </span>
             </h1>
             <p className="mt-2 text-sm text-slate-400 leading-relaxed max-w-md">
-              Create, duplicate, manage, or analyze your resume copies easily from a centralized control panel.
+              Create, duplicate, manage, or analyze your resume copies easily
+              from a centralized control panel.
             </p>
           </div>
 
@@ -209,7 +229,9 @@ export default function MyResumes() {
           ) : sortedAndFilteredResumes.length === 0 ? (
             /* 3. Empty State Fallback */
             <EmptyState
-              title={searchQuery ? 'No Matching Resumes' : 'Build Your First Resume'}
+              title={
+                searchQuery ? 'No Matching Resumes' : 'Build Your First Resume'
+              }
               description={
                 searchQuery
                   ? "We couldn't find any resumes matching your search filters. Clear typing to display all copies."
@@ -218,7 +240,9 @@ export default function MyResumes() {
               icon={FileText}
               actionText={searchQuery ? 'Clear Search' : 'Build Now'}
               onActionClick={
-                searchQuery ? () => setSearchQuery('') : () => navigate('/builder/new')
+                searchQuery
+                  ? () => setSearchQuery('')
+                  : () => navigate('/builder/new')
               }
             />
           ) : (

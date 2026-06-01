@@ -11,22 +11,28 @@ export default function TemplateSelector({ value = 'MODERN', onChange }) {
     {
       id: 'MODERN',
       name: 'Modern Accent',
-      description: 'Dynamic layout equipped with sidebar accent lines and visual HSL tag highlights. Perfect for tech and creative roles.',
-      style: 'border-cyan-500/20 bg-cyan-950/10 text-cyan-400 hover:border-cyan-500/50',
+      description:
+        'Dynamic layout equipped with sidebar accent lines and visual HSL tag highlights. Perfect for tech and creative roles.',
+      style:
+        'border-cyan-500/20 bg-cyan-950/10 text-cyan-400 hover:border-cyan-500/50',
       activeColor: 'border-cyan-500 shadow-cyan-500/10 bg-cyan-950/20',
     },
     {
       id: 'CORPORATE',
       name: 'Corporate Formal',
-      description: 'Elegant centered header layouts, crisp typography, and formal column spacing. Tailored for traditional business, finance, or law roles.',
-      style: 'border-blue-500/20 bg-blue-950/10 text-blue-400 hover:border-blue-500/50',
+      description:
+        'Elegant centered header layouts, crisp typography, and formal column spacing. Tailored for traditional business, finance, or law roles.',
+      style:
+        'border-blue-500/20 bg-blue-950/10 text-blue-400 hover:border-blue-500/50',
       activeColor: 'border-blue-500 shadow-blue-500/10 bg-blue-950/20',
     },
     {
       id: 'MINIMAL',
       name: 'Minimal Clean',
-      description: 'Clean thin dividers, maximum spacing, and high readability margins. Suitable for academic, research, or executive resumes.',
-      style: 'border-emerald-500/20 bg-emerald-950/10 text-emerald-400 hover:border-emerald-500/50',
+      description:
+        'Clean thin dividers, maximum spacing, and high readability margins. Suitable for academic, research, or executive resumes.',
+      style:
+        'border-emerald-500/20 bg-emerald-950/10 text-emerald-400 hover:border-emerald-500/50',
       activeColor: 'border-emerald-500 shadow-emerald-500/10 bg-emerald-950/20',
     },
   ];
@@ -57,7 +63,9 @@ export default function TemplateSelector({ value = 'MODERN', onChange }) {
                 </div>
               )}
 
-              <h3 className={`text-base font-bold tracking-tight ${isActive ? 'text-white' : 'text-slate-300'}`}>
+              <h3
+                className={`text-base font-bold tracking-tight ${isActive ? 'text-white' : 'text-slate-300'}`}
+              >
                 {tpl.name}
               </h3>
               <p className="mt-2.5 text-xs text-slate-400 leading-relaxed">

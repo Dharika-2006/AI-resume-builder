@@ -13,7 +13,12 @@ const LoadingScreen = () => {
         <motion.div
           className="absolute w-20 h-20 rounded-full bg-blue-500/30"
           animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.15, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 0.2,
+          }}
         />
         {/* Logo mark */}
         <motion.div
@@ -21,7 +26,9 @@ const LoadingScreen = () => {
           animate={{ rotate: [0, 5, -5, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <span className="text-white font-extrabold text-2xl tracking-tight">R</span>
+          <span className="text-white font-extrabold text-2xl tracking-tight">
+            R
+          </span>
         </motion.div>
       </div>
 
@@ -35,7 +42,9 @@ const LoadingScreen = () => {
         <h1 className="text-white font-bold text-xl tracking-tight">
           Resume<span className="text-cyan-400">AI</span>
         </h1>
-        <p className="text-slate-500 text-sm mt-1 tracking-wide">Initializing...</p>
+        <p className="text-slate-500 text-sm mt-1 tracking-wide">
+          Initializing...
+        </p>
       </motion.div>
 
       {/* Animated dots */}

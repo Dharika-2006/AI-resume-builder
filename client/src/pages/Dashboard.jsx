@@ -1,5 +1,12 @@
 import { motion } from 'framer-motion';
-import { PlusCircle, FileText, Cpu, UserCog, Calendar, TrendingUp } from 'lucide-react';
+import {
+  PlusCircle,
+  FileText,
+  Cpu,
+  UserCog,
+  Calendar,
+  TrendingUp,
+} from 'lucide-react';
 import useAuthStore from '../store/authStore';
 import Navbar from '../components/Navbar';
 import PageWrapper from '../components/PageWrapper';
@@ -51,7 +58,13 @@ export default function Dashboard() {
               className="flex items-center gap-2 text-blue-400 font-medium text-sm tracking-wider uppercase"
             >
               <Calendar className="h-4 w-4" />
-              <span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</span>
+              <span>
+                {new Date().toLocaleDateString('en-US', {
+                  weekday: 'long',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </span>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 10 }}
@@ -59,7 +72,11 @@ export default function Dashboard() {
               transition={{ duration: 0.4, delay: 0.1 }}
               className="mt-2 text-3xl font-extrabold sm:text-4xl tracking-tight text-white leading-none"
             >
-              {getGreeting()}, <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">{getFirstName(user?.name)}</span>!
+              {getGreeting()},{' '}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                {getFirstName(user?.name)}
+              </span>
+              !
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 10 }}
@@ -67,7 +84,9 @@ export default function Dashboard() {
               transition={{ duration: 0.4, delay: 0.2 }}
               className="mt-3 text-slate-400 text-sm md:text-base max-w-xl leading-relaxed"
             >
-              Ready to construct your next professional chapter? Utilize our advanced AI analyzers and builder systems to gain strategic career advantages.
+              Ready to construct your next professional chapter? Utilize our
+              advanced AI analyzers and builder systems to gain strategic career
+              advantages.
             </motion.p>
           </div>
 
@@ -81,15 +100,21 @@ export default function Dashboard() {
               <TrendingUp className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Account Tier</p>
-              <p className="text-sm font-bold text-white mt-0.5">Professional (Free)</p>
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+                Account Tier
+              </p>
+              <p className="text-sm font-bold text-white mt-0.5">
+                Professional (Free)
+              </p>
             </div>
           </motion.div>
         </div>
 
         {/* Dynamic Statistics Panel */}
         <div className="mb-10">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">Workspace Statistics</h2>
+          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">
+            Workspace Statistics
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {/* Stat: Total Resumes */}
             <motion.div
@@ -100,7 +125,9 @@ export default function Dashboard() {
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-xl pointer-events-none" />
               <div>
-                <p className="text-sm text-slate-400 font-medium">Total Resumes</p>
+                <p className="text-sm text-slate-400 font-medium">
+                  Total Resumes
+                </p>
                 <p className="text-2xl font-black mt-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
                   {dashboardStats.resumes}
                 </p>
@@ -119,7 +146,9 @@ export default function Dashboard() {
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl pointer-events-none" />
               <div>
-                <p className="text-sm text-slate-400 font-medium">ATS Analyses</p>
+                <p className="text-sm text-slate-400 font-medium">
+                  ATS Analyses
+                </p>
                 <p className="text-2xl font-black mt-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
                   {dashboardStats.analyses}
                 </p>
@@ -138,7 +167,9 @@ export default function Dashboard() {
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl pointer-events-none" />
               <div>
-                <p className="text-sm text-slate-400 font-medium">AI Generations</p>
+                <p className="text-sm text-slate-400 font-medium">
+                  AI Generations
+                </p>
                 <p className="text-2xl font-black mt-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
                   {dashboardStats.generations}
                 </p>
@@ -152,7 +183,9 @@ export default function Dashboard() {
 
         {/* Feature Actions Hub Grid */}
         <div>
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">Quick Actions</h2>
+          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">
+            Quick Actions
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {quickActions.map((action, idx) => (
               <motion.div

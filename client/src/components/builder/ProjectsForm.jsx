@@ -10,7 +10,13 @@ export default function ProjectsForm({ data = [], onChange }) {
   const handleAdd = () => {
     onChange([
       ...data,
-      { name: '', techStack: '', description: '', githubLink: '', liveLink: '' },
+      {
+        name: '',
+        techStack: '',
+        description: '',
+        githubLink: '',
+        liveLink: '',
+      },
     ]);
   };
 
@@ -57,7 +63,9 @@ export default function ProjectsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. AI Resume Builder SaaS"
                   value={item.name || ''}
-                  onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'name', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -71,7 +79,9 @@ export default function ProjectsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. React, Node.js, Tailwind CSS, PostgreSQL"
                   value={item.techStack || ''}
-                  onChange={(e) => handleFieldChange(index, 'techStack', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'techStack', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -85,7 +95,9 @@ export default function ProjectsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. github.com/johndoe/resume-builder"
                   value={item.githubLink || ''}
-                  onChange={(e) => handleFieldChange(index, 'githubLink', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'githubLink', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -99,7 +111,9 @@ export default function ProjectsForm({ data = [], onChange }) {
                   type="text"
                   placeholder="e.g. resume-builder.dev"
                   value={item.liveLink || ''}
-                  onChange={(e) => handleFieldChange(index, 'liveLink', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'liveLink', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all"
                 />
               </div>
@@ -113,7 +127,9 @@ export default function ProjectsForm({ data = [], onChange }) {
                   rows={4}
                   placeholder="e.g. Designed a robust full-stack SaaS platform utilizing Tailwind and Zustand to deliver visual-first dashboards. Shifted data sanitization to PostgreSQL..."
                   value={item.description || ''}
-                  onChange={(e) => handleFieldChange(index, 'description', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, 'description', e.target.value)
+                  }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all resize-y leading-relaxed"
                 />
               </div>
