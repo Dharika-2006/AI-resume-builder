@@ -5,6 +5,7 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 import resumeRoutes from './routes/resumeRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import atsRoutes from './routes/atsRoutes.js';
 
 // ─── App Setup ──────────────────────────────────────────────
 const app = express();
@@ -25,6 +26,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/ats', atsRoutes);
 
 // ─── 404 Handler ────────────────────────────────────────────
 app.use((req, res) => {

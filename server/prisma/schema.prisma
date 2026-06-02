@@ -181,9 +181,13 @@ model Certification {
 model ATSAnalysis {
   id                  String   @id @default(uuid())
   score               Int
+  scoreLabel          String   @default("Needs Improvement")
   keywordMatchPercent Float
+  matchedKeywords     String[]
   missingKeywords     String[]
+  strengths           String[]
   suggestions         String[]
+  breakdown           Json?
   userId              String
   resumeId            String?
   createdAt           DateTime @default(now())
