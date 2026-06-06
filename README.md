@@ -1,99 +1,133 @@
-# AI Resume Builder SaaS
+# ResumeAI - Full-Stack AI Resume Builder & ATS Optimization
 
 [![CI](https://github.com/Dharika-2006/AI-resume-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/Dharika-2006/AI-resume-builder/actions/workflows/ci.yml)
 
-A premium, modern Full-Stack AI-powered Resume Builder and ATS Optimization platform built using React (Vite), Tailwind CSS, Express, Prisma, and PostgreSQL.
+ResumeAI is a premium SaaS platform designed to help job seekers create professional, tailored resumes and optimize them to bypass Applicant Tracking Systems (ATS). The application leverages AI for bullet point optimization, skills suggestions, summary generation, and real-time ATS scoring based on target job descriptions.
 
 ---
 
-## Tech Stack
+## 🚀 Key Features
 
-### Frontend
-- **Framework**: React (Vite) [React 18.3.x]
-- **Routing**: React Router DOM
-- **Styling**: Tailwind CSS & Framer Motion
-- **Icons**: Lucide React
-- **Notifications**: React Hot Toast
-- **State Management**: Zustand
-- **HTTP Client**: Axios
-
-### Backend
-- **Framework**: Node.js & Express.js
-- **Database**: PostgreSQL (Neon / Prisma compatible)
-- **ORM**: Prisma 6.x Stable
-- **Authentication**: JWT & bcryptjs
-- **Uploads**: Multer, pdf-parse, mammoth
-- **AI Integrations**: Future Groq API for ATS scores and content generation
+* **Interactive Resume Builder**: Drag-and-drop sections, template switching, and professional color themes.
+* **ATS Analyzer**: Real-time scoring, keyword audit (matched vs. missing keywords), strengths analysis, and improvement suggestions.
+* **AI Enhancements**: Generate summaries, tailor work experience, generate project descriptions, and get custom skills suggestions.
+* **Version Control & History**: Snapshot saving and version restoration for multiple revisions of a resume.
+* **High-Fidelity PDF Export**: Clean, standard-compliant PDF exports ready for applications.
+* **Secure Authentication**: JWT-based secure user registration and login systems.
 
 ---
 
-## Folder Structure
+## 🛠️ Technology Stack
 
-```
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React (Vite), Tailwind CSS, Framer Motion, Zustand, React Router DOM, Axios |
+| **Backend** | Node.js, Express.js, Multer, PDF-Parse, Mammoth, Groq SDK |
+| **Database & ORM** | PostgreSQL (Neon serverless instance), Prisma ORM 6.x |
+| **CI/CD & DevOps** | GitHub Actions (CI), Docker, Docker Compose, Nginx (Frontend server) |
+| **Cloud Hosting** | Vercel (Frontend), Render (Backend), Neon (Database) |
+
+---
+
+## 📂 Detailed Folder Structure
+
+The project is structured as a monorepo split into the frontend (`client/`) and backend (`server/`):
+
+```text
 AI-resume-builder/
-├── client/                     # Frontend Vite + React application
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                 # GitHub Actions CI pipeline configuration
+│       └── README.md              # Documentation for CI environment secrets
+├── client/                        # Frontend React Application
+│   ├── public/                    # Static assets & public images
 │   ├── src/
-│   │   ├── assets/             # Static images, assets, styling entry points
-│   │   ├── components/         # Reusable global UI elements
-│   │   ├── forms/              # Input forms for different resume sections
-│   │   ├── pages/              # High-level feature pages
-│   │   ├── services/           # API integration and client services
-│   │   ├── store/              # Zustand state stores
-│   │   ├── hooks/              # Custom React hooks
-│   │   ├── utils/              # Client side helper utilities
-│   │   ├── layouts/            # Layout wrappers (e.g. Dashboard/Auth layouts)
-│   │   ├── routes/             # App routing configs
-│   │   └── templates/          # Resume rendering templates
-│   ├── .env                    # Client environment settings
-│   ├── .prettierrc             # Prettier rules configuration
-│   └── tailwind.config.js      # Tailwind configurations
-│
-├── server/                     # Backend Node.js Express server
-│   ├── config/                 # Configurations (e.g., db connection, env settings)
-│   ├── controllers/            # Request handlers matching route bindings
-│   ├── routes/                 # Express route definitions
-│   ├── middleware/             # Custom express middleware (Auth, error handlers, uploads)
-│   ├── services/               # Core business services
-│   ├── ai/                     # AI parsing and generation processors
-│   ├── prisma/                 # Prisma database configuration and schemas
-│   ├── uploads/                # Temporary/permanent file uploads
-│   ├── utils/                  # Backend utilities
-│   ├── server.js               # Entry point of Express server
-│   └── .env                    # Server environment secrets and configs
-│
-├── .gitignore                  # Git patterns to ignore
-└── README.md                   # Project overview & documentation
+│   │   ├── assets/                # Styling and styling entry points
+│   │   ├── components/            # Reusable UI widgets & layout wrappers
+│   │   │   ├── builder/           # Resume editors & template viewers
+│   │   │   └── landing/           # Landing page landing items (Hero, Features)
+│   │   ├── forms/                 # Form inputs (Experience, Projects, Education)
+│   │   ├── hooks/                 # Custom React hooks (CORS/Auth/API state)
+│   │   ├── layouts/               # Dashboard and Auth shell layouts
+│   │   ├── pages/                 # Full feature views (ATS, Profile, Builder)
+│   │   ├── routes/                # Client routing definitions
+│   │   ├── services/              # API request layers (Axios clients)
+│   │   ├── store/                 # Client state management (Zustand)
+│   │   ├── templates/             # Resume rendering layouts (Modern, Tech, etc.)
+│   │   └── utils/                 # Frontend helpers (PDF export, formatters)
+│   ├── Dockerfile                 # Client image build configuration (Nginx based)
+│   ├── nginx.conf                 # Nginx routing config for SPA router support
+│   ├── package.json               # Frontend package manager configuration
+│   ├── tailwind.config.js         # Tailwind utility styling settings
+│   ├── vercel.json                # Vercel deployment & routing header config
+│   └── vite.config.js             # Vite compiler definitions
+├── server/                        # Backend Node.js API Service
+│   ├── ai/                        # Groq LLM integration client & prompts
+│   ├── config/                    # Configurations & Prisma DB instances
+│   ├── controllers/               # Request controllers (Auth, Resume, ATS, AI)
+│   ├── middleware/                # Route security, upload handling & error catchers
+│   ├── prisma/                    # Schema migrations, schema.prisma specification
+│   ├── routes/                    # API route entrypoints (Express Routers)
+│   ├── services/                  # Business logic (file parser, resume control)
+│   ├── uploads/                   # Temporary folder for parsed files
+│   ├── utils/                     # Test scripts and helper functions
+│   ├── Dockerfile                 # Backend image build configuration
+│   ├── package.json               # Backend package manager configuration
+│   └── server.js                  # Entry point of the API server
+├── .env.example                   # Configuration template for local settings
+├── docker-compose.yml             # Local docker compose orchestration script
+├── render.yaml                    # Declarative Render service blueprint
+├── DEPLOYMENT.md                  # Comprehensive deployment instructions
+└── README.md                      # Main readme (this file)
 ```
 
 ---
 
-## Setup Instructions
+## 💻 Local Setup & Development
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- PostgreSQL (Local or Neon)
-- npm or yarn
+- Node.js (v20+ recommended)
+- Docker Desktop (Optional, for running via containers)
+- Neon PostgreSQL connection string (or a local PostgreSQL server)
 
-### Frontend Setup
-1. Navigate to client folder:
+---
+
+### Option A: Running Locally with Docker Compose (Recommended)
+
+This compiles both frontend and backend within isolated Docker environments:
+
+1. **Clone the Repository**:
    ```bash
-   cd client
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Configure environment variables in `client/.env`:
-   ```env
-   VITE_API_URL=http://localhost:5000/api
-   ```
-4. Start development server:
-   ```bash
-   npm run dev
+   git clone https://github.com/Dharika-2006/AI-resume-builder.git
+   cd AI-resume-builder
    ```
 
-### Backend Setup
-1. Navigate to server folder:
+2. **Configure Environment Variables**:
+   Create a `.env` file at the root:
+   ```bash
+   cp .env.example .env
+   ```
+   Fill in the missing variables (`DATABASE_URL`, `JWT_SECRET`, `GROQ_API_KEY`).
+
+3. **Spin Up Containers**:
+   ```bash
+   docker compose up -d --build
+   ```
+
+4. **Access the Application**:
+   - Frontend: [http://localhost:5173](http://localhost:5173)
+   - Backend API: [http://localhost:5000](http://localhost:5000)
+
+---
+
+### Option B: Running Locally (Manual Setup)
+
+#### 1. Database Setup
+1. Create a PostgreSQL database (or retrieve the Neon connection string).
+2. Configure `.env` inside `server/` or in the root.
+
+#### 2. Backend Setup
+1. Navigate to the `server/` directory:
    ```bash
    cd server
    ```
@@ -101,18 +135,48 @@ AI-resume-builder/
    ```bash
    npm install
    ```
-3. Configure environment variables in `server/.env`:
-   ```env
-   DATABASE_URL=postgresql://user:password@localhost:5432/resumedb
-   JWT_SECRET=your_jwt_secret_here
-   GROQ_API_KEY=your_groq_key_here
-   PORT=5000
-   ```
-4. Run Prisma database migrations/scaffold:
+3. Generate the Prisma Client and run migrations:
    ```bash
+   npx prisma generate
    npx prisma db push
    ```
-5. Start backend development server:
+4. Start the development backend:
    ```bash
    npm run dev
    ```
+
+#### 3. Frontend Setup
+1. Open a new terminal tab and navigate to `client/`:
+   ```bash
+   cd client
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the frontend developer server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## ⚙️ CI/CD Pipeline (GitHub Actions)
+
+The repository runs validation automatically on commits to `main`/`develop` and on pull requests to `main`.
+- **Frontend Validation**: Runs `npm ci` and `npm run build` to verify clean Vite compiles.
+- **Backend Validation**: Runs `npm ci`, generates the Prisma Client (`prisma generate`), and validates the schema (`prisma validate`).
+- **Docker Validation**: Evaluates environment interpolation and runs `docker compose config` and `docker compose build` to verify container validity.
+- **Concurrency Control**: Running builds on the same branch are cancelled if a newer commit is pushed (`cancel-in-progress: true`).
+
+---
+
+## 🌐 Production Deployment
+
+The project is optimized for deployment on cloud services:
+
+* **Frontend**: Deployed on **Vercel** with full SPA fallback support using [vercel.json](file:///c:/Users/kavit/OneDrive/Desktop/AI-resume-builder/client/vercel.json).
+* **Backend**: Deployed on **Render** using the [render.yaml](file:///c:/Users/kavit/OneDrive/Desktop/AI-resume-builder/render.yaml) blueprint Web Service spec.
+* **Database**: Hosted on **Neon** serverless database.
+
+For complete, step-by-step setup guides, list of environment variable checklists, and troubleshooting instructions, please read our [DEPLOYMENT.md](file:///c:/Users/kavit/OneDrive/Desktop/AI-resume-builder/DEPLOYMENT.md).
