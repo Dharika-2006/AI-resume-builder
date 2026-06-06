@@ -1,37 +1,102 @@
-# ResumeAI - Full-Stack AI Resume Builder & ATS Optimization
+# ResumeAI - AI-Powered Resume Builder & ATS Optimization Platform
 
-[![CI](https://github.com/Dharika-2006/AI-resume-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/Dharika-2006/AI-resume-builder/actions/workflows/ci.yml)
-
-ResumeAI is a premium SaaS platform designed to help job seekers create professional, tailored resumes and optimize them to bypass Applicant Tracking Systems (ATS). The application leverages AI for bullet point optimization, skills suggestions, summary generation, and real-time ATS scoring based on target job descriptions.
-
----
-
-## 🚀 Key Features
-
-* **Interactive Resume Builder**: Drag-and-drop sections, template switching, and professional color themes.
-* **ATS Analyzer**: Real-time scoring, keyword audit (matched vs. missing keywords), strengths analysis, and improvement suggestions.
-* **AI Enhancements**: Generate summaries, tailor work experience, generate project descriptions, and get custom skills suggestions.
-* **Version Control & History**: Snapshot saving and version restoration for multiple revisions of a resume.
-* **High-Fidelity PDF Export**: Clean, standard-compliant PDF exports ready for applications.
-* **Secure Authentication**: JWT-based secure user registration and login systems.
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Production--Ready-success?style=for-the-badge&logo=vercel" alt="Status Badge"/>
+  <img src="https://img.shields.io/badge/Frontend-React%20%7C%20Vite%20%7C%20Tailwind-blue?style=for-the-badge&logo=react" alt="Frontend Badge"/>
+  <img src="https://img.shields.io/badge/Backend-Node%20%7C%20Express%20%7C%20Prisma-green?style=for-the-badge&logo=node.js" alt="Backend Badge"/>
+  <img src="https://img.shields.io/badge/Database-PostgreSQL%20(Neon)-blue?style=for-the-badge&logo=postgresql" alt="Database Badge"/>
+  <img src="https://img.shields.io/badge/Docker-Supported-blue?style=for-the-badge&logo=docker" alt="Docker Badge"/>
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License Badge"/>
+</p>
 
 ---
 
-## 🛠️ Technology Stack
+## 🌟 Project Overview
 
-| Layer | Technology |
-| :--- | :--- |
-| **Frontend** | React (Vite), Tailwind CSS, Framer Motion, Zustand, React Router DOM, Axios |
-| **Backend** | Node.js, Express.js, Multer, PDF-Parse, Mammoth, Groq SDK |
-| **Database & ORM** | PostgreSQL (Neon serverless instance), Prisma ORM 6.x |
-| **CI/CD & DevOps** | GitHub Actions (CI), Docker, Docker Compose, Nginx (Frontend server) |
-| **Cloud Hosting** | Vercel (Frontend), Render (Backend), Neon (Database) |
+**ResumeAI** is an advanced, production-grade SaaS platform designed to empower job seekers by combining a high-fidelity interactive resume builder with a powerful Applicant Tracking System (ATS) optimization engine. The platform goes beyond basic template completion by integrating a robust AI service powered by the Groq SDK to score resumes, extract structural flaws, suggest keywords, and rewrite work experience and projects dynamically using the high-impact **STAR method**.
+
+By parsing uploaded documents (PDF/DOCX) and matching them directly against target job descriptions, ResumeAI helps candidates bypass automated gatekeepers and significantly improves interview request rates.
 
 ---
 
-## 📂 Detailed Folder Structure
+## 🚀 Live Demo
 
-The project is structured as a monorepo split into the frontend (`client/`) and backend (`server/`):
+Explore the live application in action:
+
+* 🖥️ **Frontend Client (Vercel):** [https://ai-resume-builder-swart-kappa.vercel.app](https://ai-resume-builder-swart-kappa.vercel.app)
+* ⚙️ **Backend REST API (Render):** [https://ai-resume-builder-hqr6.onrender.com](https://ai-resume-builder-hqr6.onrender.com)
+
+---
+
+## ✨ Implemented Features
+
+ResumeAI offers a complete suite of professional tools to build, analyze, optimize, and manage career profiles:
+
+### 📝 Core Resume Management
+* **Interactive Resume Builder:** A dynamic, drag-and-drop enabled workspace allowing users to rearrange sections, update entries, and view rendering updates in real-time.
+* **Premium Templates:** Six professionally styled, industry-standard templates:
+  * 🎨 *Modern:* Sleek grid designs tailored for technology, startups, and creative fields.
+  * 🏢 *Corporate:* Trustworthy, structured layouts optimized for finance, legal, and operational roles.
+  * 🌿 *Minimal:* Clean, high-readability layouts focusing on typography and balanced spacing.
+  * 👔 *Executive:* Polished structures emphasizing leadership, high-level metrics, and career progression.
+  * 💻 *Tech:* Compact layouts highlighting technical stacks, repositories, and technical contributions.
+  * 💡 *Creative:* Bold styling with subtle accents designed for marketing and design-oriented careers.
+* **Accent Color Themes:** Live customizable color palettes to personalize template aesthetics instantly.
+* **High-Fidelity PDF Export:** Perfect standard-compliant PDF exports utilizing advanced CSS break controls, ensuring page layouts remain pristine.
+
+### 🧠 AI Optimization Suite (Powered by Groq)
+* **Resume Parsing:** Upload an existing PDF or DOCX file to automatically extract structure, experience, education, and contact details.
+* **ATS Analyzer:** Evaluates resumes against specific target job descriptions, producing an instant score based on matching algorithms.
+* **ATS Deep Insights:** Diagnostic reports auditing match statistics, keyword densities, formatting red flags, and styling guidelines.
+* **AI Summary Generator:** Instant generation of compelling, role-tailored professional summaries.
+* **AI Experience Enhancement:** Automatically rewrites work experience bullet points to emphasize impact, action verbs, and quantifiable metrics using the **STAR methodology**.
+* **AI Project Enhancement:** Polishes technical and academic projects to highlight technologies, architecture, and complexity.
+* **AI Skill Suggestions:** Recommends missing hard and soft skills based on target roles to maximize ATS score matching.
+* **Resume Tailoring:** Adjusts wording, tone, and keyword alignment to target specific industries or job descriptions.
+
+### 📂 History & Security
+* **Version History:** Automatic snapshot-saving to log resume revisions.
+* **Compare Versions:** Side-by-side comparison interfaces to review historical changes.
+* **Restore Versions:** Restore any previous point-in-time resume version back to active development with a single click.
+* **Dashboard Analytics:** Comprehensive visualization charts tracking resume counts, overall completion rates, and average ATS optimization scores.
+* **User Profile Management:** Edit personal contact details, profiles, and configure system preferences.
+* **Secure Authentication:** Complete JWT-based user sign-up, secure login, salted password hashing (BcryptJS), and routing guards.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+* **React.js & Vite:** Fast, modern compilation framework with hot module reloading.
+* **Tailwind CSS:** Premium custom utility styles and theme controls.
+* **Framer Motion:** Smooth, hardware-accelerated animations and user interaction transitions.
+* **Zustand:** Lightweight, high-performance global state management.
+* **React Router DOM v6:** Declarative client-side SPA routing.
+* **Axios:** Standardized HTTP client config with interceptors for JWT injection.
+* **HTML2PDF.js:** Vector-perfect, client-side PDF document generation.
+
+### Backend
+* **Node.js & Express.js:** Fast, asynchronous REST API architecture.
+* **Multer:** Multi-part file upload processing middleware.
+* **PDF-Parse & Mammoth:** Advanced extraction engines to read text content from PDF and DOCX files.
+* **BcryptJS & JWT:** Secure user password hashing and token-based state authorization.
+
+### Database
+* **PostgreSQL (Neon):** Serverless Postgres database instance with scaling support.
+* **Prisma ORM (v6.x):** Type-safe query builder, schema migration tool, and database client generator.
+
+### AI Engine
+* **Groq Cloud SDK:** Advanced inference acceleration using Llama-3 and Mixtral models for ultra-fast text transformations and analyses.
+
+### DevOps & Deployment
+* **Docker:** Full containerization setup for backend node applications and frontend static servers.
+* **Nginx:** Static file distribution server serving the React SPA bundle with fallback routing support.
+* **GitHub Actions:** CI pipeline automating project builds and configuration validations.
+* **Vercel / Render:** Deployment targets for global frontend and backend scale.
+
+---
+
+## 📂 Project Structure
 
 ```text
 AI-resume-builder/
@@ -83,51 +148,42 @@ AI-resume-builder/
 
 ---
 
+## ⚙️ Environment Variables
+
+Copy `.env.example` to `.env` in the root folder before starting development:
+
+```bash
+cp .env.example .env
+```
+
+### Backend (`server/.env` or root `.env` for Docker)
+| Variable Name | Description | Example / Default |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | PostgreSQL Connection String (supports pooling/Neon SSL). | `postgresql://user:pass@host/db?sslmode=require` |
+| `JWT_SECRET` | Secret key for signing web tokens securely. | `super_secure_development_jwt_secret_phrase` |
+| `GROQ_API_KEY` | API Key retrieved from the Groq Cloud Console. | `gsk_AbCdEf123456789...` |
+| `NODE_ENV` | Environment context. | `development` (use `production` on servers) |
+| `ALLOWED_ORIGINS`| CORS allowed origin URL list (comma-separated). | `http://localhost:5173` |
+
+### Frontend (`client/.env`)
+| Variable Name | Description | Example / Default |
+| :--- | :--- | :--- |
+| `VITE_API_URL` | Base endpoint URL target for React Axios clients. | `http://localhost:5000/api` |
+
+---
+
 ## 💻 Local Setup & Development
 
-### Prerequisites
-- Node.js (v20+ recommended)
-- Docker Desktop (Optional, for running via containers)
-- Neon PostgreSQL connection string (or a local PostgreSQL server)
+Follow these steps to run ResumeAI locally on your system:
 
----
+### Option A: Local Development (Manual Setup)
 
-### Option A: Running Locally with Docker Compose (Recommended)
+#### 1. Setup the Database
+1. Run a PostgreSQL database locally or provision a database on Neon.
+2. Store your credentials in a `.env` file inside the `server/` directory.
 
-This compiles both frontend and backend within isolated Docker environments:
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/Dharika-2006/AI-resume-builder.git
-   cd AI-resume-builder
-   ```
-
-2. **Configure Environment Variables**:
-   Create a `.env` file at the root:
-   ```bash
-   cp .env.example .env
-   ```
-   Fill in the missing variables (`DATABASE_URL`, `JWT_SECRET`, `GROQ_API_KEY`).
-
-3. **Spin Up Containers**:
-   ```bash
-   docker compose up -d --build
-   ```
-
-4. **Access the Application**:
-   - Frontend: [http://localhost:5173](http://localhost:5173)
-   - Backend API: [http://localhost:5000](http://localhost:5000)
-
----
-
-### Option B: Running Locally (Manual Setup)
-
-#### 1. Database Setup
-1. Create a PostgreSQL database (or retrieve the Neon connection string).
-2. Configure `.env` inside `server/` or in the root.
-
-#### 2. Backend Setup
-1. Navigate to the `server/` directory:
+#### 2. Start the Backend API
+1. Navigate to the server folder:
    ```bash
    cd server
    ```
@@ -135,18 +191,19 @@ This compiles both frontend and backend within isolated Docker environments:
    ```bash
    npm install
    ```
-3. Generate the Prisma Client and run migrations:
+3. Generate Prisma client & migrate tables:
    ```bash
    npx prisma generate
    npx prisma db push
    ```
-4. Start the development backend:
+4. Run the development server:
    ```bash
    npm run dev
    ```
+   *The server runs on [http://localhost:5000](http://localhost:5000)*
 
-#### 3. Frontend Setup
-1. Open a new terminal tab and navigate to `client/`:
+#### 3. Start the Frontend Client
+1. Open a new terminal session and navigate to the client folder:
    ```bash
    cd client
    ```
@@ -154,29 +211,106 @@ This compiles both frontend and backend within isolated Docker environments:
    ```bash
    npm install
    ```
-3. Start the frontend developer server:
+3. Run the development server:
    ```bash
    npm run dev
    ```
+   *The client runs on [http://localhost:5173](http://localhost:5173)*
+
+---
+
+### Option B: Containerized Development (Docker Compose)
+
+Ensure you have Docker Desktop installed.
+
+1. **Build Container Images:**
+   ```bash
+   docker compose build
+   ```
+2. **Launch Services in Background:**
+   ```bash
+   docker compose up -d
+   ```
+3. **Shutdown and Clean Resources:**
+   ```bash
+   docker compose down
+   ```
+
+*When using Docker, access the frontend at [http://localhost:5173](http://localhost:5173) and the backend API at [http://localhost:5000](http://localhost:5000).*
 
 ---
 
 ## ⚙️ CI/CD Pipeline (GitHub Actions)
 
-The repository runs validation automatically on commits to `main`/`develop` and on pull requests to `main`.
-- **Frontend Validation**: Runs `npm ci` and `npm run build` to verify clean Vite compiles.
-- **Backend Validation**: Runs `npm ci`, generates the Prisma Client (`prisma generate`), and validates the schema (`prisma validate`).
-- **Docker Validation**: Evaluates environment interpolation and runs `docker compose config` and `docker compose build` to verify container validity.
-- **Concurrency Control**: Running builds on the same branch are cancelled if a newer commit is pushed (`cancel-in-progress: true`).
+This project has an integrated CI pipeline structured in `.github/workflows/ci.yml` that triggers on:
+* Pushes to `main` and `develop`
+* Pull requests targeted to the `main` branch
+
+### Pipeline Verifications
+* **Frontend Build Validation:** Installs all project dependencies via `npm ci` and runs `npm run build` to verify standard, error-free Vite compiles.
+* **Prisma Schema Checks:** Run `prisma generate` to build TypeScript types, and execute `prisma validate` to verify the DB schemas are structured correctly.
+* **Docker Compose Validation:** Validates container variable interpolation and compose configurations through `docker compose config`.
+* **Docker Image Build Checks:** Automates test builds of the frontend and backend Dockerfiles to verify that the containerized applications build successfully.
 
 ---
 
 ## 🌐 Production Deployment
 
-The project is optimized for deployment on cloud services:
+The project is optimized for direct hosting on Render, Vercel, and Neon.
 
-* **Frontend**: Deployed on **Vercel** with full SPA fallback support using [vercel.json](file:///c:/Users/kavit/OneDrive/Desktop/AI-resume-builder/client/vercel.json).
-* **Backend**: Deployed on **Render** using the [render.yaml](file:///c:/Users/kavit/OneDrive/Desktop/AI-resume-builder/render.yaml) blueprint Web Service spec.
-* **Database**: Hosted on **Neon** serverless database.
+### Hosting Breakdown
+* **Database:** Managed Serverless Database hosted on **Neon**.
+* **Backend REST API:** Hosted on **Render** (via blue-green container deploy or native Node).
+* **Frontend:** Hosted on **Vercel** with full client-side router config in `vercel.json`.
 
-For complete, step-by-step setup guides, list of environment variable checklists, and troubleshooting instructions, please read our [DEPLOYMENT.md](file:///c:/Users/kavit/OneDrive/Desktop/AI-resume-builder/DEPLOYMENT.md).
+### Example Production Environment Variables
+
+#### Backend (Render Configuration)
+```env
+DATABASE_URL=postgresql://neondb_owner:password@ep-cool-snowflake-123456.us-east-2.aws.neon.tech/neondb?sslmode=require
+JWT_SECRET=production_jwt_high_entropy_secret_key_987654321
+GROQ_API_KEY=gsk_prod_aBcdEFGhIjKlmNoPqrStUvWxYz12345
+NODE_ENV=production
+ALLOWED_ORIGINS=https://ai-resume-builder-swart-kappa.vercel.app
+```
+
+#### Frontend (Vercel Configuration)
+```env
+VITE_API_URL=https://ai-resume-builder-hqr6.onrender.com/api
+```
+
+---
+
+## 🧪 Testing Checklist
+
+Use the following checklist to verify that all modules are operating normally:
+
+* [ ] **Register:** Verify user registration behaves correctly, rejects duplicate emails, and hashes passwords securely.
+* [ ] **Login:** Confirm JWT validation issues and correctly signs authentication states.
+* [ ] **Resume CRUD:** Ensure resumes can be created, updated with details, loaded on login, and deleted cleanly.
+* [ ] **ATS Analysis:** Verify uploading resumes and matching them to job descriptions outputs dynamic percentage scores.
+* [ ] **AI Features:** Confirm Groq integration generates professional summaries, rewrites achievements, and lists valid skill suggestions.
+* [ ] **Version History:** Confirm manual or autosave states log, allow comparative reviews, and successfully restore past configurations.
+* [ ] **PDF Export:** Verify that downloading PDF format files compiles layout styling options and separates pages nicely.
+
+---
+
+## 🗺️ Future Roadmap
+
+* 📈 **SEO Optimization:** Server-side landing page optimization, custom metadata headers, and dynamic site maps.
+* 📊 **Google Analytics:** Integrate analytical trackers to measure conversion rates and page view durations.
+* 🚨 **Sentry Monitoring:** Add error reporting packages to catch backend and frontend exceptions instantly.
+* ✉️ **Cover Letter Generator:** Custom matching algorithm generating targeted cover letters for specific job posts.
+* 🤖 **Interview Preparation AI:** Generates custom mock interview questions and answer guidelines based on resume profiles.
+
+---
+
+## ✍️ Author
+
+* **Dharikashree Karthikeyan** - [GitHub Profile](https://github.com/Dharika-2006)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

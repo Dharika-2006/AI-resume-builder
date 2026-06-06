@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: resume-ai-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install && npx prisma generate && npx prisma migrate deploy
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+        description: Connection URI for your Neon PostgreSQL database
+      - key: JWT_SECRET
+        generateValue: true
+        description: Secret token for signing JSON Web Tokens
+      - key: GROQ_API_KEY
+        sync: false
+        description: API access key for Groq LLM services
+      - key: ALLOWED_ORIGINS
+        sync: false
+        description: Comma-separated list of allowed frontend origins (e.g., https://your-site.vercel.app)
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
