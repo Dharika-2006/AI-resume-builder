@@ -76,6 +76,7 @@ export const duplicateResumePayload = (resume) => {
   return {
     title: `${resume.title} (Copy)`,
     template: resume.template,
+    colorTheme: resume.colorTheme,
     description: resume.description,
     personalInfo,
     education,
@@ -108,6 +109,24 @@ export const getTemplateColor = (template) => {
         bg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
         gradient: 'from-emerald-500 to-teal-500',
         text: 'text-emerald-400',
+      };
+    case 'EXECUTIVE':
+      return {
+        bg: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+        gradient: 'from-indigo-500 to-purple-500',
+        text: 'text-indigo-400',
+      };
+    case 'TECH':
+      return {
+        bg: 'bg-teal-500/10 text-teal-400 border-teal-500/20',
+        gradient: 'from-teal-500 to-cyan-500',
+        text: 'text-teal-400',
+      };
+    case 'CREATIVE':
+      return {
+        bg: 'bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/20',
+        gradient: 'from-fuchsia-500 to-pink-500',
+        text: 'text-fuchsia-400',
       };
     default:
       return {

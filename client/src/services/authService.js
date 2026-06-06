@@ -39,4 +39,20 @@ export const authService = {
   logout: () => {
     localStorage.removeItem('token');
   },
+
+  /**
+   * Update the user profile details (name, email, password).
+   */
+  updateProfile: async ({ name, email, password }) => {
+    const response = await api.put('/auth/profile', { name, email, password });
+    return response.data; // { success, message, data: { user } }
+  },
+
+  /**
+   * Fetch the dynamic dashboard stats, activity logs, and AI breakdowns.
+   */
+  getDashboardStats: async () => {
+    const response = await api.get('/auth/dashboard-stats');
+    return response.data; // { success, data: { metrics, aiStats, scoreHistory, recentActivity } }
+  },
 };

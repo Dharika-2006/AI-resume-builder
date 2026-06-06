@@ -8,6 +8,7 @@ import {
   UploadCloud,
   AlertTriangle,
   Download,
+  History,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -33,6 +34,8 @@ import SkillsForm from '../components/builder/SkillsForm';
 import CertificationsForm from '../components/builder/CertificationsForm';
 import TemplateSelector from '../components/builder/TemplateSelector';
 import ResumePreview from '../components/builder/ResumePreview';
+import VersionHistoryModal from '../components/builder/VersionHistoryModal';
+import { versionService } from '../services/versionService';
 
 export default function ResumeBuilder() {
   const { id } = useParams();
@@ -49,6 +52,7 @@ export default function ResumeBuilder() {
   const [mobileTab, setMobileTab] = useState('edit');
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const tempParsedData = useRef(null);
 
@@ -242,10 +246,20 @@ export default function ResumeBuilder() {
       return;
     }
 
-    const cleanTitle = (resume.title || 'resume')
-      .trim()
-      .replace(/[^a-zA-Z0-9]/g, '_');
-    const filename = `${cleanTitle}.pdf`;
+    const userName = (resume.personalInfo?.name || '').trim();
+    const cleanName = userName
+      ? userName.replace(/[^a-zA-Z0-9]/g, '_')
+      : 'Resume';
+
+    const templateName = resume.template
+      ? resume.template.charAt(0).toUpperCase() + resume.template.slice(1).toLowerCase()
+      : 'Modern';
+
+    const hasResumeWord = cleanName.toLowerCase().includes('resume');
+    const filename = hasResumeWord
+      ? `${cleanName}_${templateName}.pdf`
+      : `${cleanName}_Resume_${templateName}.pdf`;
+
     const opt = {
       margin: [0.4, 0.4, 0.4, 0.4], // Symmetrical 0.4 inch margins on all sides
       filename: filename,
@@ -307,6 +321,24 @@ export default function ResumeBuilder() {
     setResume((prev) => ({ ...prev, [section]: data }));
   }, []);
 
+  const handleAcceptAiDraft = useCallback(async (updatedResumeData, reason) => {
+    setResume(updatedResumeData);
+    isDirty.current = false;
+    try {
+      const response = await resumeService.updateResume(id, updatedResumeData);
+      if (response.data?.success) {
+        await versionService.createSnapshot(id, {
+          reason,
+          createdByAI: true,
+        });
+        toast.success(`${reason} saved as a version snapshot! 💾`);
+      }
+    } catch (err) {
+      console.error('[handleAcceptAiDraft]', err);
+      toast.error('Failed to save version snapshot.');
+    }
+  }, [id]);
+
   // ── Renders active form based on activeSection selection ──
   const renderActiveForm = () => {
     switch (activeSection) {
@@ -323,6 +355,18 @@ export default function ResumeBuilder() {
           <SummaryForm
             value={resume.summary}
             onChange={(val) => handleUpdateField('summary', val)}
+            onAcceptDraft={(draftText) => {
+              const updated = {
+                ...resume,
+                summary: draftText,
+                personalInfo: {
+                  ...resume.personalInfo,
+                  summary: draftText,
+                }
+              };
+              handleAcceptAiDraft(updated, 'AI Summary Accepted');
+            }}
+            resumeId={id}
           />
         );
       case 'education':
@@ -337,6 +381,12 @@ export default function ResumeBuilder() {
           <ExperienceForm
             data={resume.experience}
             onChange={(data) => handleUpdateSection('experience', data)}
+            onAcceptDraft={(index, newText) => {
+              const list = [...resume.experience];
+              list[index] = { ...list[index], description: newText };
+              const updated = { ...resume, experience: list };
+              handleAcceptAiDraft(updated, 'AI Experience Accepted');
+            }}
           />
         );
       case 'projects':
@@ -344,6 +394,12 @@ export default function ResumeBuilder() {
           <ProjectsForm
             data={resume.projects}
             onChange={(data) => handleUpdateSection('projects', data)}
+            onAcceptDraft={(index, newText) => {
+              const list = [...resume.projects];
+              list[index] = { ...list[index], description: newText };
+              const updated = { ...resume, projects: list };
+              handleAcceptAiDraft(updated, 'AI Project Accepted');
+            }}
           />
         );
       case 'skills':
@@ -351,6 +407,11 @@ export default function ResumeBuilder() {
           <SkillsForm
             data={resume.skills}
             onChange={(data) => handleUpdateSection('skills', data)}
+            onAcceptDraft={(updatedSkills, skillName) => {
+              const updated = { ...resume, skills: updatedSkills };
+              handleAcceptAiDraft(updated, `AI Skill Accepted: ${skillName}`);
+            }}
+            resumeId={id}
           />
         );
       case 'certifications':
@@ -365,6 +426,8 @@ export default function ResumeBuilder() {
           <TemplateSelector
             value={resume.template}
             onChange={(val) => handleUpdateField('template', val)}
+            colorTheme={resume.colorTheme}
+            onChangeColorTheme={(val) => handleUpdateField('colorTheme', val)}
           />
         );
       default:
@@ -438,6 +501,18 @@ export default function ResumeBuilder() {
               <Download className="h-3.5 w-3.5" />
               <span>Download PDF</span>
             </button>
+
+            {/* Version History trigger */}
+            {id && id !== 'new' && (
+              <button
+                onClick={() => setIsHistoryModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15 transition-all shadow-inner hover:scale-[1.02] active:scale-95 duration-150"
+              >
+                <History className="h-3.5 w-3.5" />
+                <span>Version History</span>
+              </button>
+            )}
+
           </div>
 
           {/* Mobile view top tab toggler */}
@@ -521,6 +596,18 @@ export default function ResumeBuilder() {
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}
         onImport={handleImportResume}
+      />
+
+      {/* Version History Modal */}
+      <VersionHistoryModal
+        isOpen={isHistoryModalOpen}
+        onClose={() => setIsHistoryModalOpen(false)}
+        resumeId={id}
+        resumeData={resume}
+        onRestoreSuccess={(restoredResume) => {
+          setResume(restoredResume);
+          isDirty.current = false;
+        }}
       />
 
       {/* Confirmation Dialog Modal */}

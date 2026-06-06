@@ -6,6 +6,7 @@
 export const emptyResume = {
   title: 'Untitled Resume',
   template: 'MODERN',
+  colorTheme: 'BLUE',
   description: '',
   personalInfo: {
     name: '',

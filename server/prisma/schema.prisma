@@ -21,6 +21,16 @@ enum ResumeTemplate {
   MODERN
   CORPORATE
   MINIMAL
+  EXECUTIVE
+  TECH
+  CREATIVE
+}
+
+enum ResumeColorTheme {
+  BLUE
+  PURPLE
+  EMERALD
+  SLATE
 }
 
 // ============================================================
@@ -39,8 +49,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  resumes     Resume[]
-  atsAnalyses ATSAnalysis[]
+  resumes      Resume[]
+  atsAnalyses  ATSAnalysis[]
+  aiActivities AIActivity[]
 }
 
 // --- Resume -------------------------------------------------
@@ -49,13 +60,14 @@ model User {
 // Optimized for: Template switching, PDF export, AI rewriting.
 
 model Resume {
-  id          String         @id @default(uuid())
+  id          String           @id @default(uuid())
   title       String
   description String?
-  template    ResumeTemplate @default(MODERN)
+  template    ResumeTemplate   @default(MODERN)
+  colorTheme  ResumeColorTheme @default(BLUE)
   userId      String
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   personalInfo   PersonalInfo?
@@ -65,6 +77,7 @@ model Resume {
   skills         Skill[]
   certifications Certification[]
   atsAnalyses    ATSAnalysis[]
+  versions       ResumeVersion[]
 
   @@index([userId])
 }
@@ -198,3 +211,38 @@ model ATSAnalysis {
   @@index([userId])
   @@index([resumeId])
 }
+
+enum AIActivityType {
+  SUMMARY
+  EXPERIENCE
+  PROJECT
+  SKILLS
+  TAILOR
+  ATS_INSIGHTS
+}
+
+model AIActivity {
+  id        String         @id @default(uuid())
+  userId    String
+  type      AIActivityType
+  createdAt DateTime       @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model ResumeVersion {
+  id            String   @id @default(uuid())
+  resumeId      String
+  versionNumber Int
+  reason        String?
+  createdByAI   Boolean  @default(false)
+  snapshot      Json
+  createdAt     DateTime @default(now())
+
+  resume        Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+}
+

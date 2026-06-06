@@ -149,17 +149,45 @@
 .resume-export-theme .text-cyan-400,
 .resume-export-theme .text-blue-400,
 .resume-export-theme .text-blue-450 {
-  color: #0ea5e9 !important; /* Solid sky-500 cyan accent */
+  color: #3b82f6 !important; /* Solid blue accent */
+}
+.resume-export-theme .text-purple-400 {
+  color: #a855f7 !important; /* Solid purple accent */
+}
+.resume-export-theme .text-emerald-400 {
+  color: #10b981 !important; /* Solid emerald accent */
+}
+.resume-export-theme .text-slate-350,
+.resume-export-theme .text-slate-300 {
+  color: #94a3b8 !important; /* Solid slate accent */
 }
 
-/* Force solid badge backgrounds and cyan accents */
+/* Force solid badge backgrounds and accents */
 .resume-export-theme .bg-cyan-500\/10,
 .resume-export-theme .bg-blue-500\/10,
 .resume-export-theme .bg-cyan-950\/40,
 .resume-export-theme .bg-blue-950\/40 {
-  background-color: #0c1a30 !important; /* Solid dark blue accent badge background */
-  color: #0ea5e9 !important;
-  border-color: #0ea5e9 !important;
+  background-color: #0f172a !important; /* Solid dark blue accent badge background */
+  color: #3b82f6 !important;
+  border-color: #1e3a8a !important;
+}
+.resume-export-theme .bg-purple-500\/10,
+.resume-export-theme .bg-purple-950\/40 {
+  background-color: #1e112c !important; /* Solid purple badge background */
+  color: #c084fc !important;
+  border-color: #4a1d6d !important;
+}
+.resume-export-theme .bg-emerald-500\/10,
+.resume-export-theme .bg-emerald-950\/40 {
+  background-color: #062016 !important; /* Solid emerald badge background */
+  color: #34d399 !important;
+  border-color: #064e3b !important;
+}
+.resume-export-theme .bg-slate-800,
+.resume-export-theme .bg-slate-900\/50 {
+  background-color: #1e293b !important; /* Solid slate badge background */
+  color: #cbd5e1 !important;
+  border-color: #334155 !important;
 }
 
 .resume-export-theme .border-cyan-500\/20,
@@ -168,7 +196,22 @@
 .resume-export-theme .border-blue-500\/30,
 .resume-export-theme .border-cyan-900\/60,
 .resume-export-theme .border-blue-900\/60 {
-  border-color: #0ea5e9 !important; /* Solid sky-500 border line */
+  border-color: #1e3a8a !important; /* Solid blue border line */
+}
+.resume-export-theme .border-purple-500\/20,
+.resume-export-theme .border-purple-500\/30,
+.resume-export-theme .border-purple-900\/60 {
+  border-color: #4a1d6d !important; /* Solid purple border line */
+}
+.resume-export-theme .border-emerald-500\/20,
+.resume-export-theme .border-emerald-500\/30,
+.resume-export-theme .border-emerald-900\/60 {
+  border-color: #064e3b !important; /* Solid emerald border line */
+}
+.resume-export-theme .border-slate-700\/60,
+.resume-export-theme .border-slate-800,
+.resume-export-theme .border-slate-850 {
+  border-color: #334155 !important; /* Solid slate border line */
 }
 
 /* ── PDF Export Page-Break and Spacing Layout Adjustments ── */

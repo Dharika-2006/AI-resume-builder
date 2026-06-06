@@ -21,6 +21,7 @@ export const createResume = async (req, res) => {
     const {
       title,
       template,
+      colorTheme,
       description,
       personalInfo,
       education,
@@ -38,10 +39,17 @@ export const createResume = async (req, res) => {
       });
     }
 
-    if (template && !['MODERN', 'CORPORATE', 'MINIMAL'].includes(template)) {
+    if (template && !['MODERN', 'CORPORATE', 'MINIMAL', 'EXECUTIVE', 'TECH', 'CREATIVE'].includes(template)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid template type. Allowed types: MODERN, CORPORATE, MINIMAL.',
+        message: 'Invalid template type. Allowed types: MODERN, CORPORATE, MINIMAL, EXECUTIVE, TECH, CREATIVE.',
+      });
+    }
+
+    if (colorTheme && !['BLUE', 'PURPLE', 'EMERALD', 'SLATE'].includes(colorTheme)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid color theme type. Allowed types: BLUE, PURPLE, EMERALD, SLATE.',
       });
     }
 
@@ -66,6 +74,7 @@ export const createResume = async (req, res) => {
       data: {
         title: title.trim(),
         template: template || 'MODERN',
+        colorTheme: colorTheme || 'BLUE',
         description: description?.trim() || null,
         userId: req.user.id,
         // Nested creations
@@ -151,6 +160,7 @@ export const getMyResumes = async (req, res) => {
         id: true,
         title: true,
         template: true,
+        colorTheme: true,
         updatedAt: true,
         description: true,
         _count: {
@@ -229,6 +239,7 @@ export const updateResume = async (req, res) => {
     const {
       title,
       template,
+      colorTheme,
       description,
       personalInfo,
       education,
@@ -246,10 +257,17 @@ export const updateResume = async (req, res) => {
       });
     }
 
-    if (template && !['MODERN', 'CORPORATE', 'MINIMAL'].includes(template)) {
+    if (template && !['MODERN', 'CORPORATE', 'MINIMAL', 'EXECUTIVE', 'TECH', 'CREATIVE'].includes(template)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid template type. Allowed types: MODERN, CORPORATE, MINIMAL.',
+        message: 'Invalid template type. Allowed types: MODERN, CORPORATE, MINIMAL, EXECUTIVE, TECH, CREATIVE.',
+      });
+    }
+
+    if (colorTheme && !['BLUE', 'PURPLE', 'EMERALD', 'SLATE'].includes(colorTheme)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid color theme type. Allowed types: BLUE, PURPLE, EMERALD, SLATE.',
       });
     }
 
@@ -292,6 +310,7 @@ export const updateResume = async (req, res) => {
       data: {
         title: title.trim(),
         template: template || 'MODERN',
+        colorTheme: colorTheme || 'BLUE',
         description: description?.trim() || null,
         // Upsert 1:1 Personal Info
         personalInfo: personalInfo ? {

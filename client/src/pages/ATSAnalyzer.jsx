@@ -23,6 +23,7 @@ import {
 import toast from 'react-hot-toast';
 import api from '../services/api';
 import { atsService } from '../services/atsService';
+import { aiService } from '../services/aiService';
 import Navbar from '../components/Navbar';
 import PageWrapper from '../components/PageWrapper';
 
@@ -39,6 +40,128 @@ export default function ATSAnalyzer() {
 
   // Results display state
   const [activeAnalysis, setActiveAnalysis] = useState(null);
+  const [aiInsights, setAiInsights] = useState('');
+  const [loadingInsights, setLoadingInsights] = useState(false);
+
+  // Tailoring states
+  const [tailorData, setTailorData] = useState(null);
+  const [tailoring, setTailoring] = useState(false);
+  const [applyingSummary, setApplyingSummary] = useState(false);
+
+  useEffect(() => {
+    setAiInsights('');
+    setTailorData(null);
+  }, [activeAnalysis?.id]);
+
+  const handleTailorResume = async () => {
+    if (!selectedResumeId) {
+      toast.error('Please select a resume first.');
+      return;
+    }
+    if (!jobDescription.trim()) {
+      toast.error('Please paste the target job description on the left panel to tailor your resume.');
+      return;
+    }
+    if (!activeAnalysis) {
+      toast.error('Please run an ATS analysis before tailoring your resume.');
+      return;
+    }
+
+    setTailoring(true);
+    setTailorData(null);
+    try {
+      const response = await aiService.tailorResume(selectedResumeId, jobDescription);
+      if (response.success && response.data) {
+        setTailorData(response.data);
+        toast.success('Resume tailoring insights generated! 🚀');
+      } else {
+        toast.error(response.message || 'AI service temporarily unavailable.');
+      }
+    } catch (err) {
+      console.error('[handleTailorResume]', err);
+      const msg = err.response?.data?.message || 'AI service temporarily unavailable.';
+      toast.error(msg);
+    } finally {
+      setTailoring(false);
+    }
+  };
+
+  const handleApplyTailoredSummary = async () => {
+    if (!selectedResumeId || !tailorData?.optimizedSummary) return;
+
+    setApplyingSummary(true);
+    try {
+      // 1. Fetch full resume details
+      const response = await api.get(`/resumes/${selectedResumeId}`);
+      if (!response.data?.success || !response.data?.data) {
+        throw new Error('Failed to retrieve resume details.');
+      }
+
+      const currentResume = response.data.data;
+
+      // 2. Prepare updated resume payload
+      const updatedResume = {
+        title: currentResume.title,
+        template: currentResume.template,
+        colorTheme: currentResume.colorTheme,
+        description: currentResume.description,
+        personalInfo: {
+          ...currentResume.personalInfo,
+          summary: tailorData.optimizedSummary,
+        },
+        education: currentResume.education || [],
+        experience: currentResume.experience || [],
+        projects: currentResume.projects || [],
+        skills: currentResume.skills || [],
+        certifications: currentResume.certifications || [],
+      };
+
+      // 3. Update the resume in the database
+      const updateResponse = await api.put(`/resumes/${selectedResumeId}`, updatedResume);
+      if (!updateResponse.data?.success) {
+        throw new Error('Failed to update resume.');
+      }
+
+      // 4. Create version history snapshot
+      const versionResponse = await api.post(`/resumes/${selectedResumeId}/versions`, {
+        reason: 'Resume Tailoring Accepted',
+        createdByAI: true,
+      });
+
+      if (versionResponse.data?.success) {
+        toast.success('Tailored summary applied and saved to version history! 💾');
+      } else {
+        toast.success('Tailored summary applied to resume!');
+      }
+    } catch (err) {
+      console.error('[handleApplyTailoredSummary]', err);
+      const msg = err.response?.data?.message || err.message || 'Error occurred while applying summary.';
+      toast.error(msg);
+    } finally {
+      setApplyingSummary(false);
+    }
+  };
+
+  const handleLoadAiInsights = async () => {
+    if (!activeAnalysis?.id) return;
+    setLoadingInsights(true);
+    setAiInsights('');
+    try {
+      const response = await aiService.getAtsInsights(activeAnalysis.id);
+      if (response.success && response.data?.insights) {
+        setAiInsights(response.data.insights);
+        toast.success('AI Insights loaded! 🚀');
+      } else {
+        toast.error(response.message || 'AI service temporarily unavailable.');
+      }
+    } catch (err) {
+      console.error('[handleLoadAiInsights]', err);
+      const msg = err.response?.data?.message || 'AI service temporarily unavailable.';
+      toast.error(msg);
+    } finally {
+      setLoadingInsights(false);
+    }
+  };
 
   useEffect(() => {
     fetchResumes();
@@ -288,6 +411,30 @@ export default function ATSAnalyzer() {
                       </>
                     )}
                   </motion.button>
+
+                  {/* Tailor Resume Secondary Button */}
+                  {activeAnalysis && (
+                    <motion.button
+                      whileHover={{ scale: tailoring ? 1 : 1.02 }}
+                      whileTap={{ scale: tailoring ? 1 : 0.98 }}
+                      disabled={tailoring || analyzing || !selectedResumeId}
+                      type="button"
+                      onClick={handleTailorResume}
+                      className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-cyan-500/10 transition-all mt-3"
+                    >
+                      {tailoring ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin text-slate-350" />
+                          Running Resume Tailor...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4" />
+                          Tailor Resume
+                        </>
+                      )}
+                    </motion.button>
+                  )}
                 </form>
               )}
             </div>
@@ -441,6 +588,26 @@ export default function ATSAnalyzer() {
                             Missing Keywords: <strong className="text-rose-400 font-bold">{activeAnalysis.missingKeywords?.length || 0}</strong>
                           </p>
                         </div>
+
+                        {/* AI Insights Button */}
+                        <button
+                          type="button"
+                          onClick={handleLoadAiInsights}
+                          disabled={loadingInsights}
+                          className="w-full mt-4 inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/10 transition-all"
+                        >
+                          {loadingInsights ? (
+                            <>
+                              <Loader2 className="h-3.5 w-3.5 animate-spin text-slate-300" />
+                              <span>Loading Insights...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="h-3.5 w-3.5" />
+                              <span>AI Insights</span>
+                            </>
+                          )}
+                        </button>
                       </div>
 
                       {/* Summary Data */}
@@ -614,6 +781,154 @@ export default function ATSAnalyzer() {
                       </ul>
                     </div>
                   </div>
+
+                  {/* AI Insights Card */}
+                  <AnimatePresence>
+                    {aiInsights && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 15 }}
+                        className="rounded-3xl border border-blue-500/30 bg-blue-500/5 p-6 backdrop-blur-xl shadow-xl mt-6 relative overflow-hidden"
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+                        <h3 className="text-sm font-bold text-white flex items-center gap-2 mb-4">
+                          <Sparkles className="h-4.5 w-4.5 text-blue-400" />
+                          AI Audit Insights & Roadmap
+                        </h3>
+                        <div className="text-xs text-slate-300 space-y-4 leading-relaxed whitespace-pre-line">
+                          {aiInsights}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* AI Tailoring Insights Card */}
+                  <AnimatePresence>
+                    {tailoring && (
+                      <div className="rounded-3xl border border-blue-500/30 bg-blue-500/5 p-8 backdrop-blur-xl h-full flex flex-col items-center justify-center text-center py-10 mt-6 min-h-[200px]">
+                        <Loader2 className="h-8 w-8 text-blue-500 animate-spin mb-3" />
+                        <span className="text-sm font-semibold text-slate-350">Analyzing & tailoring resume content...</span>
+                      </div>
+                    )}
+
+                    {tailorData && !tailoring && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 15 }}
+                        className="rounded-3xl border border-cyan-500/30 bg-slate-900/70 p-6 backdrop-blur-xl shadow-xl mt-6 relative overflow-hidden animate-fadeIn"
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none" />
+                        
+                        <div className="flex items-center justify-between mb-6">
+                          <h3 className="text-base font-bold text-white flex items-center gap-2">
+                            <Sparkles className="h-5 w-5 text-cyan-400" />
+                            AI Resume Tailoring Assistant
+                          </h3>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[9px] font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 uppercase tracking-wider">
+                            ✨ AI Powered
+                          </span>
+                        </div>
+
+                        <div className="space-y-6">
+                          {/* Optimized Summary */}
+                          {tailorData.optimizedSummary && (
+                            <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
+                              <div className="flex justify-between items-center mb-2 gap-2">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                                  Tailored Summary Suggestion
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={handleApplyTailoredSummary}
+                                  disabled={applyingSummary}
+                                  className="px-2.5 py-1 rounded-lg text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/15 disabled:opacity-50 transition-all cursor-pointer shrink-0 animate-pulse"
+                                >
+                                  {applyingSummary ? 'Applying...' : 'Apply to Resume'}
+                                </button>
+                              </div>
+                              <p className="text-xs text-slate-300 leading-relaxed italic">
+                                "{tailorData.optimizedSummary}"
+                              </p>
+                            </div>
+                          )}
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Missing Keywords */}
+                            <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex flex-col">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">
+                                Missing Job Keywords
+                              </span>
+                              {tailorData.missingKeywords?.length > 0 ? (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {tailorData.missingKeywords.map((kw, i) => (
+                                    <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-950/40 text-rose-350 border border-rose-900/30 animate-fadeIn">
+                                      {kw}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : (
+                                <p className="text-xs text-slate-500 my-auto italic">None detected.</p>
+                              )}
+                            </div>
+
+                            {/* Recommended Skills */}
+                            <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex flex-col">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">
+                                Recommended Skills to Add
+                              </span>
+                              {tailorData.recommendedSkills?.length > 0 ? (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {tailorData.recommendedSkills.map((sk, i) => (
+                                    <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-950/40 text-cyan-350 border border-cyan-900/30 animate-fadeIn">
+                                      {sk}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : (
+                                <p className="text-xs text-slate-500 my-auto italic">None detected.</p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Experience Recommendations */}
+                          {tailorData.experienceRecommendations?.length > 0 && (
+                            <div>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2.5">
+                                Experience Tailoring Checklist
+                              </span>
+                              <ul className="space-y-2">
+                                {tailorData.experienceRecommendations.map((rec, i) => (
+                                  <li key={i} className="flex items-start gap-2 text-xs text-slate-350 leading-relaxed animate-fadeIn">
+                                    <span className="text-cyan-500 mt-0.5 shrink-0">•</span>
+                                    <span>{rec}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* Project Recommendations */}
+                          {tailorData.projectRecommendations?.length > 0 && (
+                            <div>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2.5">
+                                Project Tailoring Checklist
+                              </span>
+                              <ul className="space-y-2">
+                                {tailorData.projectRecommendations.map((rec, i) => (
+                                  <li key={i} className="flex items-start gap-2 text-xs text-slate-350 leading-relaxed animate-fadeIn">
+                                    <span className="text-cyan-500 mt-0.5 shrink-0">•</span>
+                                    <span>{rec}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                 </motion.div>
               ) : (

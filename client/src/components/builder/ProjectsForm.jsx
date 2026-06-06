@@ -1,12 +1,42 @@
-import { Code, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { Code, Plus, Trash2, Sparkles, Loader2, Check, X } from 'lucide-react';
 import SectionWrapper from './SectionWrapper';
+import { aiService } from '../../services/aiService';
+import toast from 'react-hot-toast';
 
 /**
  * ProjectsForm
  * - Dynamic list rendering of personal or academic projects
  * - Collects project names, tech stack arrays, description, and link URLs
  */
-export default function ProjectsForm({ data = [], onChange }) {
+export default function ProjectsForm({ data = [], onChange, onAcceptDraft }) {
+  const [enhancingIndex, setEnhancingIndex] = useState(null);
+  const [activeDraft, setActiveDraft] = useState(null); // { index, text }
+
+  const handleEnhanceProject = async (index, currentText) => {
+    if (!currentText || !currentText.trim()) {
+      toast.error('Please enter a project description first to enhance with AI.');
+      return;
+    }
+
+    setEnhancingIndex(index);
+    setActiveDraft(null);
+    try {
+      const response = await aiService.improveProject(currentText);
+      if (response.success && response.data?.improvedText) {
+        setActiveDraft({ index, text: response.data.improvedText });
+        toast.success('Project description enhanced! Check draft below ✨');
+      } else {
+        toast.error(response.message || 'AI service temporarily unavailable.');
+      }
+    } catch (err) {
+      console.error('[handleEnhanceProject]', err);
+      const msg = err.response?.data?.message || 'AI service temporarily unavailable.';
+      toast.error(msg);
+    } finally {
+      setEnhancingIndex(null);
+    }
+  };
   const handleAdd = () => {
     onChange([
       ...data,
@@ -120,9 +150,31 @@ export default function ProjectsForm({ data = [], onChange }) {
 
               {/* Description */}
               <div className="flex flex-col md:col-span-2">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                  Project Description / Context
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                    Project Description / Context
+                  </label>
+                  
+                  {/* AI Project Enhancer Trigger */}
+                  <button
+                    type="button"
+                    onClick={() => handleEnhanceProject(index, item.description)}
+                    disabled={enhancingIndex === index}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-[10px] font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                  >
+                    {enhancingIndex === index ? (
+                      <>
+                        <Loader2 className="h-3 w-3 animate-spin text-slate-300" />
+                        <span>Enhancing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-3 w-3" />
+                        <span>Enhance Project</span>
+                      </>
+                    )}
+                  </button>
+                </div>
                 <textarea
                   rows={4}
                   placeholder="e.g. Designed a robust full-stack SaaS platform utilizing Tailwind and Zustand to deliver visual-first dashboards. Shifted data sanitization to PostgreSQL..."
@@ -132,6 +184,46 @@ export default function ProjectsForm({ data = [], onChange }) {
                   }
                   className="px-3.5 py-2 rounded-xl text-sm text-white bg-slate-950/80 border border-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/50 transition-all resize-y leading-relaxed"
                 />
+
+                {/* AI Suggestions Draft Overlay */}
+                {activeDraft && activeDraft.index === index && (
+                  <div className="mt-3 p-4 rounded-2xl border border-blue-500/30 bg-blue-500/5 backdrop-blur-xl relative">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[9px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 mb-2 uppercase tracking-wider">
+                      ✨ AI Suggested Rewrite
+                    </span>
+                    <p className="text-xs text-slate-300 leading-relaxed italic">
+                      "{activeDraft.text}"
+                    </p>
+                    <div className="flex gap-2 mt-4 justify-end">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveDraft(null);
+                          toast.success('AI suggestion discarded.');
+                        }}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-900 border border-slate-800 transition-colors"
+                      >
+                        <X className="h-3 w-3 mr-1" />
+                        Discard Draft
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleFieldChange(index, 'description', activeDraft.text);
+                          if (onAcceptDraft) {
+                            onAcceptDraft(index, activeDraft.text);
+                          }
+                          setActiveDraft(null);
+                          toast.success('Project description updated with AI draft! 🎉');
+                        }}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 shadow-lg shadow-blue-500/10 transition-all"
+                      >
+                        <Check className="h-3 w-3 mr-1" />
+                        Accept AI Draft
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

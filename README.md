@@ -1,5 +1,7 @@
 # AI Resume Builder SaaS
 
+[![CI](https://github.com/Dharika-2006/AI-resume-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/Dharika-2006/AI-resume-builder/actions/workflows/ci.yml)
+
 A premium, modern Full-Stack AI-powered Resume Builder and ATS Optimization platform built using React (Vite), Tailwind CSS, Express, Prisma, and PostgreSQL.
 
 ---

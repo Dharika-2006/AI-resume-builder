@@ -63,7 +63,7 @@ export default function Navbar() {
                 </div>
               </div>
               <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent group-hover:opacity-90">
-                Resu
+                Resume
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                   AI
                 </span>

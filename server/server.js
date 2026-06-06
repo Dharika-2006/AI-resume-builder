@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import resumeRoutes from './routes/resumeRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import atsRoutes from './routes/atsRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
 
 // ─── App Setup ──────────────────────────────────────────────
 const app = express();
@@ -16,10 +17,7 @@ app.use(express.json());
 
 // ─── Health Check ───────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'AI Resume Builder API is running.',
-  });
+  res.status(200).json({ status: 'ok' });
 });
 
 // ─── Routes ─────────────────────────────────────────────────
@@ -27,6 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/ats', atsRoutes);
+app.use('/api/ai', aiRoutes);
 
 // ─── 404 Handler ────────────────────────────────────────────
 app.use((req, res) => {
