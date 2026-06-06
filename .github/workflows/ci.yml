@@ -39,6 +39,8 @@ jobs:
   backend-build:
     name: Backend Build
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
